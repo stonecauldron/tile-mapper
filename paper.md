@@ -1,6 +1,6 @@
-# Abstract
+## Abstract
 
-# Introduction
+## Introduction
 Video games are a medium that combines the artifacts from many different fields.
 Be it music, visual arts or architecture they all have their influence on the
 overall feel of a given game.
@@ -34,24 +34,9 @@ tile-based world maps.
   game. This differs from common rule based methods that have a hard time
   appropriately capturing patterns not easily expressed.
 
-Game development is a process that requires the creation many different types of
-assets. At the micro-level we have the music, 3D models, textures and sprites
-that will form the building blocks of the game; at the macro-level we have all
-the meaningful arrangements of these atomic elements; be it the architecture of
-a level, the structure of the world map or the objectives of the player.
+## Describe problem in detail
 
-This diversity comes at a cost, namely in terms of the resources and time needed
-to create these assets. Procedural content generation has emerged as an answer
-to this need by allowing the automatic creation of game content.
-
-In our project we focus on the problem of world map generation. In particular
-when applied to two-dimensional tile based maps. Tile maps are composed of
-individual images of predefined size--the tiles--concatenated together in order
-to form the spatial representation of the game. Our aim is not only to be able
-to generate these maps with human intervention but also to allow the designer
-to specify the higher level structure of the world. The objective is not to
-replace the level designer but to automate the more repetitive parts of his
-craft.
+## Describe the general idea
 
 The macro structure of the world is specified with the help of graphs whose
 nodes embody a spatial concept such as "city", "village", "forest". A connection
@@ -61,11 +46,9 @@ game. The creation of this world space is very flexible; it can simply be built
 manually by the designer or we can easily imagine more automatic ways of
 generating it with simple rule based approaches or even with graph grammars.
 
-# Background
+## Describe technical details of the idea
 
-# Past work
+## Related work
 
-# Design
-
-# Conclusion
+## Conclusion and further work
 Can we automate the holistic feel of a level?
