@@ -1,10 +1,10 @@
 ---
-title: 'Generative maps: assisting the level designer in creating world maps'
+title: 'Generative spaces: assisting the level designer in creating world maps'
 ---
 
-## Abstract
+# Abstract
 
-## Introduction
+# Introduction
 Video games are a medium that combines the artifacts from many different fields.
 Be it music, visual arts or architecture they all have their influence on the
 overall feel of a given game.
@@ -38,9 +38,9 @@ tile-based world maps.
   game. This differs from common rule based methods that have a hard time
   appropriately capturing patterns not easily expressed.
 
-## Describe problem in detail
+# Describe problem in detail
 
-## Describe the general idea
+# Describe the general idea
 
 The macro structure of the world is specified with the help of graphs whose
 nodes embody a spatial concept such as "city", "village", "forest". A connection
@@ -50,26 +50,46 @@ game. The creation of this world space is very flexible; it can simply be built
 manually by the designer or we can easily imagine more automatic ways of
 generating it with simple rule based approaches or even with graph grammars.
 
-## Describe technical details of the idea
+# Describe technical details of the idea
 
-## Related work
+# Related work
 Game companies generally do not publish their procedural content generation
 methods so it is hard to evaluate what is common in the industry. In academia,
 researchers have looked into various approaches for automatic level generation.
 The game *Super Mario Bros.* in particular has received much attention.
 
-@Shaker2012 kills many birds with one stone
+@Shaker2012 uses generative grammars combined with an evolutionary algorithm to
+create *Mario* levels that adapt themselves to the player's experience. In
+another insightful paper, @Sorenson2010 also uses an evolutionary algorithm to
+create a generic framework for level creation. Their approach allows the level
+designer to enforce multiple constraints on the generated levels making it
+adaptable to multiple genres of games.
 
-Procedural content generation is usually done with rule based systems, machine
-learning approaches have been quite recent. Researchers have focused their
-efforts on using machine learning techniques to generate new levels for the
-*Super Mario Bros.* game.
+Rather than being evolutionary, our method draws from machine learning
+techniques. The designers do not have to explicitly articulate rules about their
+designs but simply need to provide the system with examples of what they want to
+create.
 
-## Conclusion and further work
+Papers using machine learning methods to generate content are still a minority,
+bu the trend seems to be on the rise. Our use of Markov chains is directly
+inspired by the work of @Snodgrass2013 and @Dahlskog2014. They both use Markov
+chains to create *Mario* levels with very convincing results. The difference
+with our approach lies in the fact that *Mario* levels have a linear nature. The
+maps we focus on are non-linear; the player can move through both dimensions.
+
+@Summerville2015 explore non-linear level generation in the context of dungeons
+for the game *The Legend of Zelda*. Their use of a graph to represent the game
+space comes from @Dormans2010. Both papers gave us the idea of using a graph to
+define the high level structure of the world. Our focus is more on world maps
+rather than dungeons. Dungeons have a clear compartmentalization of individual
+rooms while world maps have a more organic unfolding of space. 
+
+# Conclusion and further work
 Can we automate the holistic feel of a level? How does one recreate themes in
 design works successfully? Can machine learning capture the essence of
 something?
 
+# References
 
 ---
 references:
