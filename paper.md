@@ -1,8 +1,16 @@
 ---
 title: 'Generative spaces: assisting the level designer in creating world maps'
+abstract: |
+  Creating two-dimensional tile maps by hand is a long and tedious process. Tile
+  maps contain an inherent structure and repetition that we should be able to
+  exploit. We provide a way of generating these maps automatically using machine
+  learning techniques while still allowing the level designer to specify the
+  high level spatial structure of the world. With these set of tools level
+  designers will be able to create worlds that are much larger in scope.
+papersize: A4
+documentclass: article
+#classoption: twocolumn
 ---
-
-# Abstract
 
 # Introduction
 Video games are a medium that combines the artifacts from many different fields.
@@ -82,7 +90,14 @@ for the game *The Legend of Zelda*. Their use of a graph to represent the game
 space comes from @Dormans2010. Both papers gave us the idea of using a graph to
 define the high level structure of the world. Our focus is more on world maps
 rather than dungeons. Dungeons have a clear compartmentalization of individual
-rooms while world maps have a more organic unfolding of space. 
+rooms while world maps have a more organic unfolding of space. Furthermore,
+dungeons have elements such as locked doors that restrict the order in which the
+player can traverse the rooms. World typically do not have these types of
+constraints.
+
+Finally, the video game level corpus provided by @Summerville2016 encouraged us
+to contribute to the corpus with our own extracted data and gave us a set of
+guidelines to follow when formatting the data.
 
 # Conclusion and further work
 Can we automate the holistic feel of a level? How does one recreate themes in
