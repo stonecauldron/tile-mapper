@@ -1,0 +1,151 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4975,        143]
+NotebookOptionsPosition[      4393,        119]
+NotebookOutlinePosition[      4745,        135]
+CellTagsIndexPosition[      4702,        132]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.685538939207592*^9, 3.685538957925786*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "mapFile", " ", "=", " ", 
+   "\"\</Users/pedro/Dropbox/project/data/pokemon-red-map.png\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tileMap", " ", "=", " ", 
+   RowBox[{"ImagePartition", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", "mapFile", "]"}], ",", "16"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.6855359950982103`*^9, 3.685536188511588*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"tiles", " ", "=", " ", 
+   RowBox[{"DeleteDuplicates", "[", 
+    RowBox[{"Flatten", "[", "tileMap", "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6855359950982103`*^9, 3.68553621039566*^9}, {
+  3.6855362603305483`*^9, 3.685536304511554*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"tileGlyphs", "=", 
+   RowBox[{"FromCharacterCode", " ", "/@", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "tiles", "]"}], "]"}], " ", "+", " ", 
+      "16^^3400"}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tileGlyphs", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "=", "\"\< \>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.685536306253572*^9, 3.685536308144733*^9}, {
+   3.685536367346922*^9, 3.685536402426793*^9}, {3.6855365092692223`*^9, 
+   3.685536517847096*^9}, {3.68553660822785*^9, 3.685536653093042*^9}, {
+   3.6855367357021847`*^9, 3.685536805566605*^9}, {3.685536897559537*^9, 
+   3.685536898057005*^9}, {3.6855369921517963`*^9, 3.685536998071684*^9}, {
+   3.685537058173695*^9, 3.685537099998076*^9}, {3.685537151973035*^9, 
+   3.6855371582450037`*^9}, {3.685537288619417*^9, 3.6855372998026533`*^9}, 
+   3.685537495711944*^9, {3.685537538256863*^9, 3.685537549045388*^9}, {
+   3.6855375793224287`*^9, 3.685537581161854*^9}, {3.6855376427987003`*^9, 
+   3.685537684849408*^9}, {3.685537860729364*^9, 3.685537861885796*^9}, 
+   3.685537905089066*^9, {3.685537954936797*^9, 3.685538013114121*^9}, {
+   3.6855385742069607`*^9, 3.685538575310603*^9}, {3.685539556745152*^9, 
+   3.685539603333112*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"conversionMap", "=", 
+   RowBox[{"AssociationThread", "[", 
+    RowBox[{"tiles", "\[Rule]", "tileGlyphs"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.685537981611143*^9, 3.6855380200808907`*^9}, {
+  3.685538300581089*^9, 3.685538430622912*^9}, {3.685538472035226*^9, 
+  3.685538494294017*^9}, {3.685538534885333*^9, 3.685538551238262*^9}, {
+  3.685538584215777*^9, 3.685538633697405*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"convertedMap", "=", 
+   RowBox[{"tileMap", " ", "/.", "conversionMap"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.685538636781698*^9, 3.685538637282683*^9}, {
+  3.685538677528104*^9, 3.6855387032042093`*^9}, {3.685538742786512*^9, 
+  3.685538749750209*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"characters", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"Append", "[", 
+       RowBox[{"#", ",", "\"\<\\n\>\""}], "]"}], "&"}], "/@", 
+     "convertedMap"}], " ", "//", " ", "StringJoin"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.685538761211994*^9, 3.6855388275194397`*^9}, {
+  3.685538921200844*^9, 3.685538930849547*^9}, {3.6855389626703453`*^9, 
+  3.685538987296817*^9}, {3.685539101677705*^9, 3.685539235578761*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<map.txt\>\"", ",", "characters"}], "]"}]], "Input",
+ CellChangeTimes->{{3.685539239955873*^9, 3.6855392497344837`*^9}, {
+  3.685539335162224*^9, 3.685539335452227*^9}}],
+
+Cell[BoxData["\<\"map.txt\"\>"], "Output",
+ CellChangeTimes->{3.685539251081085*^9, 3.685539338098448*^9, 
+  3.6855395830815973`*^9}]
+}, Open  ]]
+},
+WindowSize->{724, 861},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 189, 4, 32, "Input"],
+Cell[750, 26, 420, 12, 54, "Input"],
+Cell[1173, 40, 285, 6, 32, "Input"],
+Cell[1461, 48, 1330, 25, 54, "Input"],
+Cell[2794, 75, 429, 8, 32, "Input"],
+Cell[3226, 85, 292, 6, 32, "Input"],
+Cell[3521, 93, 473, 11, 32, "Input"],
+Cell[CellGroupData[{
+Cell[4019, 108, 222, 4, 32, "Input"],
+Cell[4244, 114, 133, 2, 32, "Output"]
+}, Open  ]]
+}
+]
+*)
+
