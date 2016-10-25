@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   1608332,      26434]
-NotebookOptionsPosition[   1607719,      26409]
-NotebookOutlinePosition[   1608072,      26425]
-CellTagsIndexPosition[   1608029,      26422]
+NotebookDataLength[   1608110,      26425]
+NotebookOptionsPosition[   1607575,      26403]
+NotebookOutlinePosition[   1607927,      26419]
+CellTagsIndexPosition[   1607884,      26416]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -26395,20 +26395,14 @@ fz//X/jXL6zevQC5KDgK\
 \>"]]
 }, Open  ]],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[
  RowBox[{"Export", "[", 
   RowBox[{"\"\<data/pokemon-red-clean-map.png\>\"", ",", "finalImage"}], 
   "]"}]], "Input",
- CellChangeTimes->{{3.686251198886878*^9, 3.68625123398031*^9}}],
-
-Cell[BoxData["\<\"data/pokemon-red-clean-map.png\"\>"], "Output",
- CellChangeTimes->{3.686251238825938*^9}]
-}, Open  ]]
+ CellChangeTimes->{{3.686251198886878*^9, 3.68625123398031*^9}}]
 },
-WindowSize->{794, 865},
-WindowMargins->{{Automatic, 23}, {4, Automatic}},
+WindowSize->{739, 865},
+WindowMargins->{{1, Automatic}, {Automatic, 2}},
 FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
 2016)",
 StyleDefinitions->"Default.nb"
@@ -26425,17 +26419,14 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[558, 20, 979, 26, 117, "Input"],
-Cell[1540, 48, 1424, 29, 75, "Input"],
+Cell[1540, 48, 1424, 29, 96, "Input"],
 Cell[2967, 79, 1258, 22, 32, "Input"],
 Cell[CellGroupData[{
 Cell[4250, 105, 173, 3, 32, "Input"],
 Cell[4426, 110, 1602934, 26284, 654, 1468795, 24083, "CachedBoxData", \
 "BoxData", "Output"]
 }, Open  ]],
-Cell[CellGroupData[{
-Cell[1607397, 26399, 196, 4, 32, "Input"],
-Cell[1607596, 26405, 107, 1, 32, "Output"]
-}, Open  ]]
+Cell[1607375, 26397, 196, 4, 32, "Input"]
 }
 ]
 *)
