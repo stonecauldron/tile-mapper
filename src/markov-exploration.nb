@@ -1,0 +1,53 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      1186,         45]
+NotebookOptionsPosition[       903,         30]
+NotebookOutlinePosition[      1255,         46]
+CellTagsIndexPosition[      1212,         43]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.686852636233423*^9, 3.6868526768797693`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"cityFile", "=", "\"\<../data/processed/\>"}]], "Input",
+ CellChangeTimes->{{3.6868526806117687`*^9, 3.686852720410575*^9}}]
+},
+WindowSize->{686, 853},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 191, 4, 32, "Input"],
+Cell[752, 26, 147, 2, 32, "Input"]
+}
+]
+*)
+

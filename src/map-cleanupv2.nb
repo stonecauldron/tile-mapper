@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   1947246,      35546]
-NotebookOptionsPosition[   1946252,      35509]
-NotebookOutlinePosition[   1946606,      35525]
-CellTagsIndexPosition[   1946563,      35522]
+NotebookDataLength[   1947179,      35541]
+NotebookOptionsPosition[   1946218,      35506]
+NotebookOutlinePosition[   1946572,      35522]
+CellTagsIndexPosition[   1946529,      35519]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -4466,8 +4466,6 @@ ECh3PADyF3je
     Magnification->2 Inherited]}], "}"}]], "Output",
  CellChangeTimes->{3.686390270894061*^9, 3.686390314039097*^9}]
 }, Open  ]],
-
-Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -8939,8 +8937,7 @@ ECh3PADyF3je
      PlotRange->{{0, 16}, {0, 16}}],
     StripOnInput->False,
     Magnification->5 Inherited]}], "}"}]], "Output",
- CellChangeTimes->{3.686390314187276*^9}]
-}, Open  ]],
+ CellChangeTimes->{3.686390314187276*^9}],
 
 Cell[CellGroupData[{
 
@@ -35508,7 +35505,7 @@ Cell[BoxData["\<\"data/pokemon-red-clean-mapv2.png\"\>"], "Output",
 }, Open  ]]
 },
 WindowSize->{658, 774},
-WindowMargins->{{Automatic, 25}, {Automatic, 23}},
+WindowMargins->{{21, Automatic}, {Automatic, 30}},
 FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
 2016)",
 StyleDefinitions->"Default.nb"
@@ -35535,18 +35532,16 @@ Cell[CellGroupData[{
 Cell[78253, 2098, 343, 7, 32, "Input"],
 Cell[78599, 2107, 84621, 2359, 489, "Output"]
 }, Open  ]],
+Cell[163235, 4469, 84624, 2359, 2497, InheritFromParent],
+Cell[247862, 6830, 79224, 2109, 2497, "Output"],
 Cell[CellGroupData[{
-Cell[163257, 4471, 84624, 2359, 2497, InheritFromParent],
-Cell[247884, 6832, 79224, 2109, 2497, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[327145, 8946, 737, 16, 75, "Input"],
-Cell[327885, 8964, 1617863, 26528, 526, 1525521, 25013, "CachedBoxData", \
+Cell[327111, 8943, 737, 16, 75, "Input"],
+Cell[327851, 8961, 1617863, 26528, 526, 1525521, 25013, "CachedBoxData", \
 "BoxData", "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1945785, 35497, 199, 4, 32, "Input"],
-Cell[1945987, 35503, 249, 3, 32, "Output"]
+Cell[1945751, 35494, 199, 4, 32, "Input"],
+Cell[1945953, 35500, 249, 3, 32, "Output"]
 }, Open  ]]
 }
 ]
