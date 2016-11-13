@@ -9,6 +9,9 @@ PotentialPredecessors::usage = "Create all the possible predecessors for a given
 PredecessorTilePairs::usage = "Gives a matrix with tiles and predecessor pairs.";
 ProbabilityGivenPredecessor::usage = "Gives the probability of a tile given a set of predecessor.";
 MapDistribution::usage = "Gives the conditional probability distribution of a map given in array form.";
+GetPredecessors::usage = "Get the predecessors of a specific index in a tile";
+GenerateTile::usage = "Generate the next tile.";
+GenerateMap::usage = "Create a map given an empty template and probability distributions.";
 Begin["Private`"]; 
 
 ExtractTileset[img_Image, tileSize_Integer] := DeleteDuplicates[
@@ -49,13 +52,44 @@ MapDistribution[kernel_List, mapMatrix_List]:= Module[
 	{numberOnes = Count[kernel,1,2],
 	tileSet = ExtractTileset[mapMatrix],
 	potentialPredecessors,
-	dependencyMatrix = GenerateDependencyMatrix[kernel,mapMatrix]},
+	dependencyMatrix = GenerateDependencyMatrix[kernel,mapMatrix],
+	predecessorTilePairs,
+	temp},
+	predecessorTilePairs = PredecessorTilePairs[dependencyMatrix, mapMatrix];
 	potentialPredecessors = PotentialPredecessors[tileSet,numberOnes];
-	AssociationThread[
+	temp = AssociationThread[
 	potentialPredecessors -> 
 		(ProbabilityGivenPredecessor
-			[predecessorTilePairs,#,tileSet]& /@ potentialPredecessors)]];
+			[predecessorTilePairs,#,tileSet]& /@ potentialPredecessors)];
+	temp /. (Array[0&, Length[tileSet]])-> (Array[1&, Length[tileSet]])]
 	
+GetPredecessors[kernel_List, tile_, index_, paddedMatrix_List]:= Module[{
+	numberOnes = Count[kernel, 1, 2],
+	indices = Position[Reverse[Reverse /@ kernel], 1] - 1,
+	predecessorsIndices},
+	predecessorsIndices = If[tile == 0, Nothing, Table[index, numberOnes] - indices];
+	If[predecessorsIndices === Nothing, Nothing,
+	Fold[Plus, 0, Extract[paddedMatrix, predecessorsIndices]]]]
+	
+GenerateTile[kernel_List, tile_, index_, paddedMatrix_List,probs_]:= Module[{
+	predecessors = GetPredecessors[kernel,tile,index,paddedMatrix],
+	generatedTile},
+If[predecessors === Nothing,
+	0,
+	generatedTile=RandomChoice[probs[predecessors]]]]
+	
+GenerateMap[kernel_List, mapMatrix_List, probabilities_]:= Module[{
+	dimension = Dimensions[kernel][[1]],
+	paddedMatrix,
+	generatedTile,
+	i,j},
+	paddedMatrix = ArrayPad[mapMatrix, {{dimension - 1, 0}, {dimension - 1, 0}}, 0];
+	For[i = 1, i <= Dimensions[paddedMatrix][[1]], i++,
+		For[j = 1, j <= Dimensions[paddedMatrix][[2]], j++,
+			generatedTile = GenerateTile[kernel, paddedMatrix[[i, j]], {i, j},
+								paddedMatrix, probabilities];
+			paddedMatrix[[i, j]] = generatedTile]];
+			Return[paddedMatrix]]
 
 End[]; 
 EndPackage[]; 
