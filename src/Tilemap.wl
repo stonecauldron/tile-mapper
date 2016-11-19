@@ -2,6 +2,7 @@
 
 BeginPackage["Tilemap`"]; 
 ExtractTileset::usage = "extracts the tile set of a given tilemap image.";
+TileMapToString::usage = "Converts an map matrix into textual form.";
 FindClosestTile::usage = "Replace a given tile by the closest one in the set.";
 GenerateDependencyMatrix::usage = "Genereate the dependency matrix when given an appropriate kernel.";
 ExtractMapMatrix::usage = "Create an array representing a map encoded as text.";
@@ -19,7 +20,7 @@ ExtractTileset[img_Image, tileSize_Integer] := DeleteDuplicates[
     
 ExtractTileset[mapMatrix_List] := mapMatrix // Flatten // DeleteDuplicates;
     
-TileMapToString[map_List]:=Append[#,"\n"]&/@map//StringJoin;
+TileMapToString[map_List]:=Append[#,"\n"]& /@ map // StringJoin;
 
 FindClosestTile[tileset_List,tile_Image]:=
 	findClosest[tileset,tile] =
@@ -48,9 +49,8 @@ PredecessorTilePairs[dependencyMatrix_List, mapMatrix_List]:=
 ProbabilityGivenPredecessor[predecessorTilePairs_List,predecessor_,tileset_List]:=
 	Count[predecessorTilePairs,{predecessor,#}]&/@tileset->tileset
 	
-MapDistribution[kernel_List, mapMatrix_List]:= Module[
+MapDistribution[kernel_List, mapMatrix_List, tileSet_List]:= Module[
 	{numberOnes = Count[kernel,1,2],
-	tileSet = ExtractTileset[mapMatrix],
 	potentialPredecessors,
 	dependencyMatrix = GenerateDependencyMatrix[kernel,mapMatrix],
 	predecessorTilePairs,
@@ -89,7 +89,7 @@ GenerateMap[kernel_List, mapMatrix_List, probabilities_]:= Module[{
 			generatedTile = GenerateTile[kernel, paddedMatrix[[i, j]], {i, j},
 								paddedMatrix, probabilities];
 			paddedMatrix[[i, j]] = generatedTile]];
-			Return[paddedMatrix]]
+			Return[Drop[#, 2]& /@ Drop[paddedMatrix, 2]]]
 
 End[]; 
 EndPackage[]; 
