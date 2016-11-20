@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    300828,       6874]
-NotebookOptionsPosition[    300210,       6850]
-NotebookOutlinePosition[    300563,       6866]
-CellTagsIndexPosition[    300520,       6863]
+NotebookDataLength[    300905,       6875]
+NotebookOptionsPosition[    300286,       6851]
+NotebookOutlinePosition[    300640,       6867]
+CellTagsIndexPosition[    300597,       6864]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -3486,7 +3486,7 @@ Description> </rdf:RDF></x:xmpmeta>"]]],
        DefaultBaseStyle->"ImageGraphics",
        ImageSize->Magnification[1],
        ImageSizeRaw->{16, 16},
-       PlotRange->{{0, 16}, {0, 16}}], "\[Rule]", "\"\<R\>\""}], ",", 
+       PlotRange->{{0, 16}, {0, 16}}], "\[Rule]", "\"\<M\>\""}], ",", 
      RowBox[{
       GraphicsBox[
        TagBox[RasterBox[CompressedData["
@@ -6765,7 +6765,8 @@ Description> </rdf:RDF></x:xmpmeta>"]]],
    3.686837810326597*^9}, {3.686837870796335*^9, 3.686837920982416*^9}, 
    3.686838061216145*^9, {3.686902471543682*^9, 3.686902475030836*^9}, 
    3.686903405835349*^9, {3.686903520796706*^9, 3.68690352697367*^9}, {
-   3.68690358773284*^9, 3.68690364982852*^9}}],
+   3.68690358773284*^9, 3.68690364982852*^9}, 3.6885411967040977`*^9, {
+   3.6885415873716927`*^9, 3.688541588150551*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -6849,7 +6850,7 @@ Cell[BoxData[""], "Input",
   3.6868485076018*^9}}]
 },
 WindowSize->{714, 841},
-WindowMargins->{{Automatic, 19}, {Automatic, 9}},
+WindowMargins->{{46, Automatic}, {Automatic, 14}},
 FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
 2016)",
 StyleDefinitions->"Default.nb"
@@ -6871,11 +6872,11 @@ Cell[CellGroupData[{
 Cell[1606, 49, 747, 16, 54, "Input"],
 Cell[2356, 67, 141162, 3280, 180, "Output"]
 }, Open  ]],
-Cell[143533, 3350, 153438, 3417, 468, "Input"],
-Cell[296974, 6769, 1759, 40, 117, "Input"],
-Cell[298736, 6811, 674, 16, 75, "Input"],
-Cell[299413, 6829, 602, 14, 32, "Input"],
-Cell[300018, 6845, 188, 3, 32, "Input"]
+Cell[143533, 3350, 153514, 3418, 468, "Input"],
+Cell[297050, 6770, 1759, 40, 117, "Input"],
+Cell[298812, 6812, 674, 16, 75, "Input"],
+Cell[299489, 6830, 602, 14, 32, "Input"],
+Cell[300094, 6846, 188, 3, 32, "Input"]
 }
 ]
 *)
