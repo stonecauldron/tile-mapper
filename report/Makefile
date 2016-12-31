@@ -17,7 +17,7 @@ RM=rm -f
 
 PANDOC=pandoc
 
-PANDOC_OPTIONS=--smart --standalone --filter=pandoc-citeproc
+PANDOC_OPTIONS=--smart --standalone --filter=pandoc-crossref --filter=pandoc-citeproc --number-sections
 
 PANDOC_HTML_OPTIONS=--to html5
 PANDOC_PDF_OPTIONS=

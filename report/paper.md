@@ -9,6 +9,7 @@ abstract: |
   designers will be able to create worlds that are much larger in scope.
 papersize: A4
 documentclass: article
+numbersections: true
 #classoption: twocolumn
 ---
 
@@ -26,12 +27,41 @@ you would need many lifetimes to explore them all.
 
 Most approaches to procedural generation are rule based, meaning that they rely
 on the definition of explicit rules. L-systems are an example of such a rule
-based system allowing the creation of tree-like structures. The limitations of
-rule based systems lies on the fact that they cannot learn from already existing
-examples and reproduce them. We would not be able to show an L-system images of
-oaks for example and expect it to reproduce trees in the same style. We would
-need to define exactly the rules that represent "oakness", the attributes that
-make an oak an oak.
+based system. they allow the creation of tree-like structures. TODO: Reference
+to an image of an L-system. The limitations of rule based systems lies on the
+fact that they cannot learn from already existing examples and reproduce them.
+We would not be able to show an L-system images of oaks for example and expect
+it to reproduce trees in the same style. We would need to define exactly the
+rules that represent "oakness", the attributes that make an oak an oak. TODO:
+citation L-systems
+
+Data-driven techniques for procedural generation are still relatively rare; in
+this paper we try to see whether it is possible to reproduce the spatial style
+of a given game using data-driven techniques.
+
+- We show how 2d Markov chains can be applied to the generation of 2d tile-maps.
+  [Section @sec:background] provides a few background information on what
+  tile-maps are and their current uses while [Section @sec:markov-chains]
+  describes the technical side of their implementation.
+
+- We argue that the generated maps keep the spatial style of the originals by
+  comparing compare how different input maps influence the generated maps in
+  [Section @sec:spatial-style].
+
+- We come up with a backoff smoothing method appropriate for 2d chains. First we
+  explain why it can be useful in [Section @sec:idea] and then we give the
+  technical details of its implementation in [Section @sec:backoff].
+
+- We provide a C# implementation of a text based 2d Markov chain which is
+  accessible at the following link.^[https://github.com/stonecauldron/markov2d]
+
+
+# Background {#sec:background}
+- What exactly is a tile map
+- Image of a tilemap
+- Explain why it is time consuming to create manually
+- Show how it is still relevant today by showing all the indie games that use
+  them today.
 
 Tile maps are a staple of many genres of games, they are formed by individual
 tiles of predefined size and assembled into a grid. Traditionally they are built
@@ -42,27 +72,7 @@ be used in a game. Being able to generate these maps procedurally would lift a
 burden off the shoulders of the level designers and allow the generation of much
 larger worlds.
 
-In this paper we propose a method to assist in the creation of two-dimensional
-tile-based world maps.
-
-- We develop a graph based model that allows the level designers to specify the
-  high level structure of the world map. Letting them concentrate on the general
-  outline of the world rather than its appearance.
-
-- There is an inherent repetition in tile maps that can be exploited to our
-  advantage to create them. We show that a Markov chain based model allows not
-  only procedural generation but also the reproduction of the style of a given
-  game. This differs from common rule based methods that have a hard time
-  appropriately capturing patterns not easily expressed.
-
-# Background
-- What exactly is a tile map
-- Image of a tilemap
-- Explain why it is time consuming to create manually
-- Show how it is still relevant today by showing all the indie games that use
-  them today.
-
-# The idea
+# The idea {#sec:idea}
 describe the idea in broad terms
 - take a set of maps as an example
 - generate a Markov chain based on the examples
@@ -73,13 +83,13 @@ describe the idea in broad terms
 
 # Technical details
 
-## 2D Markov chains
+## 2D Markov chains {#sec:markov-chains}
 - kernel explanation
 - choice of kernel
 
-## Spatial style conservation
+## Spatial style conservation {#sec:spatial-style}
 
-## Backoff smoothing in 2d
+## Backoff smoothing in 2d {#sec:backoff}
 
 # Related work
 Game companies generally do not publish their procedural content generation
