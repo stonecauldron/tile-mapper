@@ -13,16 +13,25 @@ documentclass: article
 ---
 
 # Introduction
-Video games are a medium that combines artifacts from many different fields. Be
-it music, visual arts or architecture they all have their influence on the
-overall feel of a given game.
+The development of a video game requires a great variety of assets. A typical
+game combines music, art and code to form a coherent whole.
 
-This wide need for resources explains partly why games are so costly to develop.
-Procedural content generation has emerged as an answer to this problem and is
-currently widely used. For example, *No Man's Sky* is a space exploration game
-that uses procedural generation to generate a whole universe of over 18
-quintillion planets $1.8 \cdot 10^{19}$, suffice to say that you would need many
-lifetimes to explore them all.
+This need for resources is one of the reasons why games are so costly to
+develop. Procedural content generation—the automatic creation of content-has
+emerged as an answer to this problem and is currently widely used, particularly
+in independent studios with lower budgets. For example, *No Man's Sky (2016)* is
+a space exploration game that uses procedural generation to generate a whole
+universe of over 18 quintillion planets $1.8 \cdot 10^{19}$, suffice to say that
+you would need many lifetimes to explore them all.
+
+Most approaches to procedural generation are rule based, meaning that they rely
+on the definition of explicit rules. L-systems are an example of such a rule
+based system allowing the creation of tree-like structures. The limitations of
+rule based systems lies on the fact that they cannot learn from already existing
+examples and reproduce them. We would not be able to show an L-system images of
+oaks for example and expect it to reproduce trees in the same style. We would
+need to define exactly the rules that represent "oakness", the attributes that
+make an oak an oak.
 
 Tile maps are a staple of many genres of games, they are formed by individual
 tiles of predefined size and assembled into a grid. Traditionally they are built
@@ -46,19 +55,31 @@ tile-based world maps.
   game. This differs from common rule based methods that have a hard time
   appropriately capturing patterns not easily expressed.
 
-# Describe problem in detail
+# Background
+- What exactly is a tile map
+- Image of a tilemap
+- Explain why it is time consuming to create manually
+- Show how it is still relevant today by showing all the indie games that use
+  them today.
 
-# Describe the general idea
+# The idea
+describe the idea in broad terms
+- take a set of maps as an example
+- generate a Markov chain based on the examples
+- explain why it should retain the spatial structure of the game -> analogy with
+  Markov chains for text generation.
+- explain the lack of data problem
+- explain how backoff smoothing helps
 
-The macro structure of the world is specified with the help of graphs whose
-nodes embody a spatial concept such as "city", "village", "forest". A connection
-between nodes signifies they are spatially linked. This graph will form the
-basic plan of the world to be created, in other words the world space of the
-game. The creation of this world space is very flexible; it can simply be built
-manually by the designer or we can easily imagine more automatic ways of
-generating it with simple rule based approaches or even with graph grammars.
+# Technical details
 
-# Describe technical details of the idea
+## 2D Markov chains
+- kernel explanation
+- choice of kernel
+
+## Spatial style conservation
+
+## Backoff smoothing in 2d
 
 # Related work
 Game companies generally do not publish their procedural content generation
@@ -100,6 +121,9 @@ to contribute to the corpus with our own extracted data and gave us a set of
 guidelines to follow when formatting the data.
 
 # Conclusion and further work
+- conditional random fields
+- limits of procedural generation
+
 Can we automate the holistic feel of a level? How does one recreate themes in
 design works successfully? Can machine learning capture the essence of
 something?
