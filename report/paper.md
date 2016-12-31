@@ -13,16 +13,16 @@ documentclass: article
 ---
 
 # Introduction
-Video games are a medium that combines the artifacts from many different fields.
-Be it music, visual arts or architecture they all have their influence on the
+Video games are a medium that combines artifacts from many different fields. Be
+it music, visual arts or architecture they all have their influence on the
 overall feel of a given game.
 
 This wide need for resources explains partly why games are so costly to develop.
-Procedural content generation--the automatic creation of game content--has
-emerged as an answer to this problem and is currently widely used. For example,
-*No Man's Sky* is a space exploration game that has used procedural generation
-to generate a whole universe of over 18 quintillion planets $1.8 \cdot 10^{19}$,
-suffice to say that you would need many lifetimes to explore them all.
+Procedural content generation has emerged as an answer to this problem and is
+currently widely used. For example, *No Man's Sky* is a space exploration game
+that uses procedural generation to generate a whole universe of over 18
+quintillion planets $1.8 \cdot 10^{19}$, suffice to say that you would need many
+lifetimes to explore them all.
 
 Tile maps are a staple of many genres of games, they are formed by individual
 tiles of predefined size and assembled into a grid. Traditionally they are built
