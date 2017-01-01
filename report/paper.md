@@ -10,6 +10,8 @@ abstract: |
 papersize: A4
 documentclass: article
 numbersections: true
+header-includes:
+    - \usepackage{graphicx}
 #classoption: twocolumn
 ---
 
@@ -20,7 +22,7 @@ game combines music, art and code to form a coherent whole.
 This need for resources is one of the reasons why games are so costly to
 develop. Procedural content generation—the automatic creation of content-has
 emerged as an answer to this problem and is currently widely used, particularly
-in independent studios with lower budgets. For example, *No Man's Sky (2016)* is
+in studios with few resources. For example, *No Man's Sky (2016)* is
 a space exploration game that uses procedural generation to generate a whole
 universe of over 18 quintillion planets $1.8 \cdot 10^{19}$, suffice to say that
 you would need many lifetimes to explore them all.
@@ -53,24 +55,42 @@ of a given game using data-driven techniques.
   technical details of its implementation in [Section @sec:backoff].
 
 - We provide a C# implementation of a text based 2d Markov chain which is
-  accessible at the following link.^[https://github.com/stonecauldron/markov2d]
-
+  accessible at the following link^[https://github.com/stonecauldron/markov2d].
 
 # Background {#sec:background}
-- What exactly is a tile map
-- Image of a tilemap
-- Explain why it is time consuming to create manually
-- Show how it is still relevant today by showing all the indie games that use
-  them today.
+First of all let us define more precisely what a tile-map is. Tile-maps are a
+staple of many genres of games, they are formed by individual tiles of
+predefined size and assembled into a grid.
 
-Tile maps are a staple of many genres of games, they are formed by individual
-tiles of predefined size and assembled into a grid. Traditionally they are built
-manually: the level designer chooses one tile for each cell of the grid. Given
-that the grids can be very large, we can easily imagine that this is a
-time-consuming process. It puts a human limit into the size of the maps that can
-be used in a game. Being able to generate these maps procedurally would lift a
-burden off the shoulders of the level designers and allow the generation of much
-larger worlds.
+\begin{figure}[h]
+\includegraphics[width=0.25\textwidth]{sample.jpg}
+\centering
+\caption{my caption}
+\end{figure}
+
+Game developers make use of tile-maps for various reasons:
+- They reduce the number of art assets that need to be created for the game
+  since the same tile can be reused in multiple places.
+- Levels created with tile-maps can be easily represented in a digital format;
+  we can simply represent them as a matrix where each entry identifies a tile
+  uniquely.
+- They allow the level designer to create new levels without having to worry
+  about creating new art assets. In some cases this can be extended into
+  fully-fledged level editors where the players themselves can create new
+  levels^[A striking example is the game *Super Mario Maker* which is built
+  entirely around the concept of players creating *Mario Bros.* levels.]
+
+Traditionally tile-maps are built manually: the level designer chooses one tile
+for each cell of the grid. Given that the grids can be very large, we can easily
+imagine that this is a time-consuming process. It puts a human limit into the
+size of the maps that can be used in a game. Being able to generate these maps
+procedurally would lift a burden off the shoulders of the level designers and
+allow the generation of much larger worlds.
+
+Contrary to what you might think, tile-maps are not relics from the past and are
+still used in many independent games, some of which have been very successful.
+
+example of games with tile-maps
 
 # The idea {#sec:idea}
 describe the idea in broad terms
