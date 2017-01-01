@@ -20,7 +20,7 @@ The development of a video game requires a great variety of assets. A typical
 game combines music, art and code to form a coherent whole.
 
 This need for resources is one of the reasons why games are so costly to
-develop. Procedural content generation—the automatic creation of content-has
+develop. Procedural content generation---the automatic creation of content---has
 emerged as an answer to this problem and is currently widely used, particularly
 in studios with few resources. For example, *No Man's Sky (2016)* is
 a space exploration game that uses procedural generation to generate a whole
@@ -62,13 +62,18 @@ First of all let us define more precisely what a tile-map is. Tile-maps are a
 staple of many genres of games, they are formed by individual tiles of
 predefined size and assembled into a grid.
 
-\begin{figure}[h]
-\includegraphics[width=0.25\textwidth]{sample.jpg}
-\centering
-\caption{my caption}
-\end{figure}
+![An example of a tile-map with the grid structure visible.\
+*Pokemon FireRed (2004)*](img/tile-map-example.png){ width=75% }
+
+<div id="fig:figureRef">
+![subfigure 1 caption](img/tile-grass.png){#fig:figureRefA width=50%}
+![subfigure 2 caption](img/tile-flower.png){#fig:figureRefB width=50%}
+
+Caption of figure
+</div>
 
 Game developers make use of tile-maps for various reasons:
+
 - They reduce the number of art assets that need to be created for the game
   since the same tile can be reused in multiple places.
 - Levels created with tile-maps can be easily represented in a digital format;
