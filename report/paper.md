@@ -84,6 +84,9 @@ Game developers make use of tile-maps for various reasons:
   fully-fledged level editors where the players themselves can create new
   levels^[A striking example is the game *Super Mario Maker* which is built
   entirely around the concept of players creating *Mario Bros.* levels.]
+- They permit the separation of gameplay and visual appearance. Tiles can for
+  example represent non-traversable space independently from their visual
+  appearance.
 
 Traditionally tile-maps are built manually: the level designer chooses one tile
 for each cell of the grid. Given that the grids can be very large, we can easily
@@ -95,16 +98,48 @@ allow the generation of much larger worlds.
 Contrary to what you might think, tile-maps are not relics from the past and are
 still used in many independent games, some of which have been very successful.
 
-example of games with tile-maps
+TODO: example of games with tile-maps
 
 # The idea {#sec:idea}
-describe the idea in broad terms
-- take a set of maps as an example
-- generate a Markov chain based on the examples
-- explain why it should retain the spatial structure of the game -> analogy with
-  Markov chains for text generation.
-- explain the lack of data problem
-- explain how backoff smoothing helps
+Let us remind you of our objective; we want to be able to generate tile-maps
+from a set of representative examples. Our process has the following steps:
+
+1. We choose the set of maps whose spatial style we want to reproduce.
+2. We represent the maps as matrices where each entry contains a tile type
+   identifier. This will be our input dataset.
+3. We generate a Markov chain whose probability distributions reflect those of
+   the original dataset. This is the learning phase of the model.
+4. We then sample this Markov chain to generate a map of any given dimension.
+   TODO: explain sampling better?
+
+This is comparable to the case where Markov chains are used for automatic essay
+writing TODO: reference to Murphy book. These automatically written essays use
+similar idioms and vocabulary to the ones present in the learning dataset; in a
+certain sense they emulate the style of a given text. For the same reasons we
+expect our Markov chains to reproduce the spatial style of its learning
+examples.
+
+One of the problems that appears when sampling Markov chains is that is likely
+for a chain to generate a sequence of elements that do not exist in the training
+dataset. As an example take the word predictors that are present in most mobile
+phones today; Imagine you have just typed the words "Colorless green ideas
+sleep"[^This sentence is an example of a grammatically correct sentence with no
+meaning which we can assume does not occur in a standard English text. Taken
+from Chomsky 1956], since this sentence is not present in the training corpus,
+the Markov chain will not be able to infer what the next most probable word is
+and will simply have to stop generating text.
+
+A way of solving this problem is to use what is called backoff smoothing TODO:
+Murphy citation in which we consider less elements of the chain when faced with
+unknown data. To take our above example again, instead of considering the whole
+chain to infer the next most likely word we can restrict ourselves to the
+previous word only, which in this case is "sleep". By reducing the number of
+elements we consider in the chain, we increase the chances of finding equivalent
+sequences in the training data, thus improving the robustness of the model.
+
+While the definition of backoff smoothing is simple with linear chains, it
+becomes more complicated in the case of 2d chains. Our approach is detailed in
+the next section.
 
 # Technical details
 
@@ -115,6 +150,8 @@ describe the idea in broad terms
 ## Spatial style conservation {#sec:spatial-style}
 
 ## Backoff smoothing in 2d {#sec:backoff}
+
+# Results
 
 # Related work
 Game companies generally do not publish their procedural content generation
