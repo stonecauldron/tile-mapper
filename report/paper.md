@@ -41,10 +41,12 @@ Data-driven techniques for procedural generation are still relatively rare; in
 this paper we try to see whether it is possible to reproduce the spatial style
 of a given game using data-driven techniques.
 
-- We show how 2d Markov chains can be applied to the generation of 2d tile-maps.
-  [Section @sec:background] provides a few background information on what
-  tile-maps are and their current uses while [Section @sec:markov-chains]
-  describes the technical side of their implementation.
+- We show how 2d Markov chains can be applied to the generation of 2d tile-maps
+  that are non-linear in nature. As opposed to past litterature @Snodgrass2013
+  we use maps with a larger number of tile types. [Section @sec:background]
+  provides a few background information on what tile-maps are and their current
+  uses while [Section @sec:markov-chains] describes the technical side of their
+  implementation.
 
 - We argue that the generated maps keep the spatial style of the originals by
   comparing compare how different input maps influence the generated maps in
@@ -95,8 +97,8 @@ size of the maps that can be used in a game. Being able to generate these maps
 procedurally would lift a burden off the shoulders of the level designers and
 allow the generation of much larger worlds.
 
-Contrary to what you might think, tile-maps are not relics from the past and are
-still used in many independent games, some of which have been very successful.
+The use of tile-maps might seem like an outdated method but they are still used
+in many independent games, some of which have been quite successful.
 
 TODO: example of games with tile-maps
 
@@ -144,14 +146,24 @@ the next section.
 # Technical details
 
 ## 2D Markov chains {#sec:markov-chains}
+- explain Markov chains very briefly
+- say that probabilities are computed with the frequencies
 - kernel explanation
-- choice of kernel
+- show how different kernels affect the results
 
 ## Spatial style conservation {#sec:spatial-style}
+- show how different inputs give rise to different styles
+- input of pokemon red for example and link to the past
+- show space versions and full versions
 
 ## Backoff smoothing in 2d {#sec:backoff}
+- explain in detail how the smaller matrix is computed
+- show how it improves the results
 
 # Results
+- show a few examples of maps generated with the method pokemon red, pokemon
+  firered and link to the past
+- evaluate them qualitatively
 
 # Related work
 Game companies generally do not publish their procedural content generation
@@ -193,8 +205,9 @@ to contribute to the corpus with our own extracted data and gave us a set of
 guidelines to follow when formatting the data.
 
 # Conclusion and further work
-- conditional random fields
-- limits of procedural generation
+- metrics to evaluate the maps quantitatively 
+- conditional random fields as in TODO: Snodgrass2016
+- limits of procedural generation with markov models
 
 Can we automate the holistic feel of a level? How does one recreate themes in
 design works successfully? Can machine learning capture the essence of

@@ -1,0 +1,188 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5623,        180]
+NotebookOptionsPosition[      5118,        158]
+NotebookOutlinePosition[      5471,        174]
+CellTagsIndexPosition[      5428,        171]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Element processing", "Section",
+ CellChangeTimes->{{3.6925164517073393`*^9, 3.692516497034524*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<Tilemap`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SameImageQ", "[", 
+    RowBox[{"im1_Image", ",", " ", "im2_Image"}], "]"}], ":=", 
+   RowBox[{"TrueQ", "[", 
+    RowBox[{
+     RowBox[{"ImageData", "[", "im1", "]"}], "\[Equal]", 
+     RowBox[{"ImageData", "[", "im2", "]"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TileMapToString", "[", "map_List", "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"Append", "[", 
+       RowBox[{"#", ",", "\"\<\\n\>\""}], "]"}], "&"}], "/@", "map"}], "//", 
+    "StringJoin"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.692516503708123*^9, 3.692516576162982*^9}, {
+  3.692596214248641*^9, 3.692596266788616*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"citiesFiles", "=", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*.png\>\"", ",", "\"\<../data/unprocessed/elements\>\""}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"citiesMaps", "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Import", "[", "#", "]"}], "&"}], "/@", "citiesFiles"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tileset", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"ExtractTileset", "[", 
+         RowBox[{"#", ",", "16"}], "]"}], "&"}], "/@", "citiesMaps"}], "//", 
+      "Flatten"}], "//", 
+     RowBox[{
+      RowBox[{"DeleteDuplicates", "[", 
+       RowBox[{"#", ",", "SameImageQ"}], "]"}], "&"}]}], "//", "Sort"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.692516612566434*^9, 3.6925167036390553`*^9}, {
+   3.692516756969618*^9, 3.692516756975721*^9}, {3.6925167944810123`*^9, 
+   3.692516947144245*^9}, 3.692517125170101*^9, {3.6925173599386797`*^9, 
+   3.692517360713523*^9}, {3.6925174072917433`*^9, 3.692517409146501*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"tileGlyphs", "=", 
+   RowBox[{"FromCharacterCode", "/@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "tileset", "]"}], "]"}], "+", "16^^3400"}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"conversionMap", "=", 
+   RowBox[{"KeyMap", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ImageData", "[", "#", "]"}], "&"}], ",", 
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{"tileset", "\[Rule]", "tileGlyphs"}], "]"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.692517362765243*^9, 3.692517469432138*^9}, {
+  3.692596331088983*^9, 3.6925963610703497`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"tileMapsCities", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ImageData", "[", "#", "]"}], "&"}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ImagePartition", "[", 
+        RowBox[{"#", ",", "16"}], "]"}], "&"}], "/@", "citiesMaps"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"asciiMaps", " ", "=", " ", 
+   RowBox[{"TileMapToString", "/@", 
+    RowBox[{"(", 
+     RowBox[{"tileMapsCities", "/.", "conversionMap"}], ")"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.692596065151031*^9, 3.6925961704583883`*^9}, {
+  3.692596285587468*^9, 3.692596293793244*^9}, {3.692596527573904*^9, 
+  3.6925965755791283`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"processedFiles", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StringReplace", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\"\<unprocessed\>\"", "\[Rule]", "\"\<processed\>\""}], ",", 
+         RowBox[{"\"\<png\>\"", "\[Rule]", "\"\<txt\>\""}], ",", " ", 
+         RowBox[{"\"\<elements\>\"", "\[Rule]", "\"\<elements-full\>\""}]}], 
+        "}"}]}], "]"}], "&"}], "/@", "citiesFiles"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MapThread", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Export", "[", 
+      RowBox[{"#1", ",", "#2"}], "]"}], "&"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"processedFiles", ",", "asciiMaps"}], "}"}]}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.692597010942882*^9, 3.692597117600011*^9}, {
+  3.69259714960874*^9, 3.69259716393307*^9}}]
+}, Open  ]]
+},
+WindowSize->{659, 863},
+WindowMargins->{{Automatic, -2}, {Automatic, 5}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 105, 1, 64, "Section"],
+Cell[688, 25, 1005, 29, 175, "Input",
+ InitializationCell->True],
+Cell[1696, 56, 1111, 30, 117, "Input"],
+Cell[2810, 88, 678, 19, 75, "Input"],
+Cell[3491, 109, 742, 20, 75, "Input"],
+Cell[4236, 131, 866, 24, 96, "Input"]
+}, Open  ]]
+}
+]
+*)
+
