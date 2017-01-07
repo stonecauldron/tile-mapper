@@ -1,0 +1,239 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8874,        231]
+NotebookOptionsPosition[      7997,        195]
+NotebookOutlinePosition[      8349,        211]
+CellTagsIndexPosition[      8306,        208]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Code",
+ CellChangeTimes->{{3.6927770684397173`*^9, 3.692777121609269*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"conversionMap", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"\"\<X\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<S\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<-\>\"", "\[Rule]", "\"\<-\>\""}], ",", 
+    RowBox[{"\"\<?\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<Q\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<E\>\"", "\[Rule]", "\"\<-\>\""}], ",", 
+    RowBox[{"\"\<<\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<>\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<[\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<]\>\"", "\[Rule]", "\"\<X\>\""}], ",", 
+    RowBox[{"\"\<o\>\"", "\[Rule]", "\"\<-\>\""}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.692777820541379*^9, 3.6927779822883873`*^9}, {
+  3.6927784019585457`*^9, 3.692778405640293*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"X\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"S\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"-\"\>", "\[Rule]", "\<\"-\"\>"}], ",", 
+   RowBox[{"\<\"?\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"Q\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"E\"\>", "\[Rule]", "\<\"-\"\>"}], ",", 
+   RowBox[{"\<\"<\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\">\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"[\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"]\"\>", "\[Rule]", "\<\"X\"\>"}], ",", 
+   RowBox[{"\<\"o\"\>", "\[Rule]", "\<\"-\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.692777983760745*^9, 3.692778406392572*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "conversionMap", "]"}]], "Input",
+ CellChangeTimes->{{3.692777992342001*^9, 3.692777997099226*^9}}],
+
+Cell[BoxData["11"], "Output",
+ CellChangeTimes->{3.692777997407617*^9, 3.692778411136627*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"marioFiles", "=", 
+  RowBox[{"FileNames", "[", 
+   RowBox[{
+   "\"\<*.txt\>\"", ",", "\"\<../data/super-mario-bros/processed\>\""}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.69277801627172*^9, 3.692778153722933*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"../data/super-mario-bros/processed/mario-1-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-1-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-1-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-2-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-3-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-3-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-4-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-4-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-5-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-5-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-6-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-6-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-6-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-7-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/mario-8-1.txt\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.692778126088192*^9, 3.692778154213361*^9}, 
+   3.692778412299919*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"levels", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Import", "[", "#", "]"}], "&"}], "/@", "marioFiles"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.692778164133573*^9, 3.69277820032347*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"newLevels", " ", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StringReplace", "[", 
+      RowBox[{"#", ",", "conversionMap"}], "]"}], "&"}], "/@", "levels"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.692778202211732*^9, 3.692778229421404*^9}, {
+   3.6927782741301394`*^9, 3.692778358634316*^9}, 3.692778420361821*^9, {
+   3.6927786075408077`*^9, 3.692778611615781*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"processedFiles", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"StringReplace", "[", 
+     RowBox[{"#", ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<processed\>\"", "\[Rule]", "\"\<processed/binary\>\""}], 
+       "}"}]}], "]"}], "&"}], "/@", "marioFiles"}]}]], "Input",
+ CellChangeTimes->{{3.692778439150651*^9, 3.692778445362813*^9}, {
+  3.6927785008987083`*^9, 3.692778573354739*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"../data/super-mario-bros/processed/binary/mario-1-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-1-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-1-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-2-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-3-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-3-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-4-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-4-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-5-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-5-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-7-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-8-1.txt\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.692778574020238*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MapThread", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"#1", ",", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"processedFiles", ",", " ", "newLevels"}], "}"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.69277857769907*^9, 3.6927786191125*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"../data/super-mario-bros/processed/binary/mario-1-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-1-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-1-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-2-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-3-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-3-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-4-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-4-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-5-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-5-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-2.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-6-3.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-7-1.txt\"\>", 
+   ",", "\<\"../data/super-mario-bros/processed/binary/mario-8-1.txt\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.69277861997401*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 774},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 190, 4, 52, "Code"],
+Cell[CellGroupData[{
+Cell[773, 28, 834, 16, 54, "Input"],
+Cell[1610, 46, 733, 14, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2380, 65, 137, 2, 32, "Input"],
+Cell[2520, 69, 93, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2650, 75, 244, 6, 32, "Input"],
+Cell[2897, 83, 1179, 19, 327, "Output"]
+}, Open  ]],
+Cell[4091, 105, 230, 7, 32, "Input"],
+Cell[4324, 114, 407, 10, 32, "Input"],
+Cell[CellGroupData[{
+Cell[4756, 128, 407, 10, 32, "Input"],
+Cell[5166, 140, 1234, 18, 327, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6437, 163, 308, 9, 32, "Input"],
+Cell[6748, 174, 1233, 18, 327, "Output"]
+}, Open  ]]
+}
+]
+*)
+
