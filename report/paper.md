@@ -143,6 +143,13 @@ While the definition of backoff smoothing is simple with linear chains, it
 becomes more complicated in the case of 2d chains. Our approach is detailed in
 the next section.
 
+# Results
+- show a few examples of maps generated with the method pokemon red, pokemon
+  firered.
+- evaluate them qualitatively
+- show how number of tiles influence the results
+- evaluate how it can realistically used in games: time for generation
+  
 # Technical details
 
 ## 2D Markov chains {#sec:markov-chains}
@@ -159,11 +166,6 @@ the next section.
 ## Backoff smoothing in 2d {#sec:backoff}
 - explain in detail how the smaller matrix is computed
 - show how it improves the results
-
-# Results
-- show a few examples of maps generated with the method pokemon red, pokemon
-  firered and link to the past
-- evaluate them qualitatively
 
 # Related work
 Game companies generally do not publish their procedural content generation
