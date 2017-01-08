@@ -1,0 +1,3506 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    148882,       3498]
+NotebookOptionsPosition[    148161,       3469]
+NotebookOutlinePosition[    148513,       3485]
+CellTagsIndexPosition[    148470,       3482]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Map reconstruction", "Section",
+ CellChangeTimes->{{3.692876763168827*^9, 3.6928767694751997`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<Tilemap`\>\"", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SameImageQ", "[", 
+    RowBox[{"im1_Image", ",", " ", "im2_Image"}], "]"}], ":=", 
+   RowBox[{"TrueQ", "[", 
+    RowBox[{
+     RowBox[{"ImageData", "[", "im1", "]"}], "\[Equal]", 
+     RowBox[{"ImageData", "[", "im2", "]"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TileMapToString", "[", "map_List", "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"Append", "[", 
+        RowBox[{"#", ",", "\"\<\\n\>\""}], "]"}], "&"}], "/@", "map"}], "//", 
+     "StringJoin"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+  "originalDataFolder", "=", 
+   "\"\<../data/pokemon-red/original/elements\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+  "generatedDataFolder", "=", "\"\<../../markov2d/generated/text\>\""}], 
+  ";"}]}], "Code",
+ CellChangeTimes->{{3.692876773601746*^9, 3.692876848767798*^9}, {
+   3.69287741269971*^9, 3.69287748013533*^9}, {3.692877874286172*^9, 
+   3.692877875864715*^9}, {3.692878788529953*^9, 3.69287878917769*^9}, 
+   3.692878973652485*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tileset", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"ExtractTileset", "[", 
+        RowBox[{
+         RowBox[{"Import", "[", "#", "]"}], ",", "16"}], "]"}], "&"}], "/@", 
+      RowBox[{"FileNames", "[", 
+       RowBox[{
+       "\"\<*.png\>\"", ",", 
+        "\"\<../data/pokemon-red/original/elements\>\""}], "]"}]}], "//", 
+     "Flatten"}], "//", 
+    RowBox[{
+     RowBox[{"DeleteDuplicates", "[", 
+      RowBox[{"#", ",", "SameImageQ"}], "]"}], "&"}]}], "//", 
+   "Sort"}]}]], "Input",
+ CellChangeTimes->{{3.692876904761982*^9, 3.6928769205506897`*^9}, {
+  3.692876986089406*^9, 3.692876993157757*^9}, {3.692877046571106*^9, 
+  3.692877145205257*^9}, {3.692877191804201*^9, 3.692877280501721*^9}, {
+  3.692877321351982*^9, 3.692877378721539*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/JfjHjx//ExISUMRAfJD4ihUrCMrD1FBCo7OxYVzyILfgEgPR
+hORJkSNGnhwz8JlFjDw1whCbHLL78Mmjy4H4+OIWXR5dHJc7sckjhw1MDlf8
+Y5MnRo5YeXzxj0+ekvgHAE4X3A4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/JfjHjx8U4RUrVgwoTkhIoAgPtPtH/T+wmNL8Q2n4U2o/AAne
+i54=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/JfjHjx8U4RUrVgwoTkhIoAjDzAH5BcbH5i988shyyGLEyGOT
+Q1ZDjDyusCFGnhz/YnM3sf7F52di/UuL8Biq8Q8ATxT/rg==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/KfjHjx9kY2xmrFixAi+mtf6EhAS8GNksfPbDzIKxSXE/sl5k
+fcTox6YXm9349BMTdoTcj00vyF3Exh++sCQ2/rGFBzn6yUl/QzX+AWYzFBU=
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/CK9YsQKMf/z4AadhcqTII6sBYULyyOYgy4H4IDYheWw0sn2E
+5JHlkPkwNiF5bGGD7k5i5JHNR3cvMfK41BAjPxr/Izf+AXo3vL4=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNU0EOgjAQbNSDR77gL7x69IrxDkQkXjApJsYf9YnclDaOmUy2AsnSdndm
+u8yEXXMvryvn3LCdXmX9PHhfv07FdDj3w63r28uxf7Rd6/fNekoW39i49Lxj
+hBBSjOP4W7nGea0znzExLEysV1WV1tw98aw15MBVnOJR176RH/foAy5/l+6B
+t7jWd/N9rAO4WC19eSZguA/mYH6uB8+ssyz1V2fm2Zf6ixx4rN8/f9GD79Pe
+c/5aOlr+Wf6Cq/qp/jmtctqrhzl/LYxqMeev9Y8C9wEE6Ge2
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOA/CK9YsQKMf/z4Aadh4shiyDQIo+tHl0fWA8PY7EG3C8THpRfZ
+bJg6ZBqXf7C5EVkvIX/jCyN8/sYWDsjhh00e5ib0MEO3A5df0f2FjpHDeTT+
+R278AwCciRad
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyFUzEOwjAMjICBsV/gF6yMrEXsaUWoWIKUIiF+lCdmo0mF0elwSiXXqi9n
+n6/trr+315UxZtzmW9s9DyF0r1OTH85+vA3eXY7+4QYX9v06F5tPbMx8vUvE
+GOdIKX2z1LGGuQTzGUeOhDaHZ5XnGhd7yznMtX00jcj9t/eSR0t7az6gfxou
+mtgznlHblffiQJ9rOtFLa+1PFlzzvOCso9SEJzhy8RzvgvO4N++DGjU+Yqhb
+9Glc9EpmSE/+D7CHxkU+62JMO8Ne1GbU3g9+exOyHLB2
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOB/QkICVgySIyS/YsUKrGpgcoTkQWx0NchyxMgjq8Emh08eZi5M
+Dt1PhOSR5dD9i64XmzwuO7HpxSWPzU58erHJ4woPmPiPHz/AGF86wGUuPr3Y
+0hK6m4nRj8u/xLgfl7txmYHNHPT4xZdv0N2DzU5i/Y4tvZNiBgBRRQ3+
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyVkj0OwjAMhSNgYOwVuAUrI2sRe1qRVixBSpEQN8oRs9G4aqQny0lKJfcn
+n9+L7fTUv9php5SajvHWdp+Lc9331sSPu52eozWPq32b0bhzv4+LzRoHtVw/
+rbUYxGrcey/mJFbj9M5zkG3hmCOxEk++ifGeahwZ75drJZ7bU9LmuLRnSct7
+TxFCWEI6K3ySH+WhPqfl9aIWz6GkT/kUknZL/eiB/13Og/ugHrW5mtELa8e5
+oUfJh8+fz/4fD9yT1mYJEiRm
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOB/QkICVgySIyS/YsUKrGpgcoTkQWx0NchyxMgjq8Emh08eZi5M
+Dt1PhOSR5dD9i64XmzwuO7HpxSWPzU58etH9DsM/fvwAY1zxjU+eEr3UkKe2
+GYT8CZOn1E8D7XcAJe9APg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNkzEOwjAMRSNgYOwVuAUrI2sRe1oRKpYgpUiIG+WI2SCusPRlOUkruW36
+/H/sJD2Mz/6+McbM+3zrh/cphOFz6fLg6ufH5N3t7F9ucuE4bvPH7h87s1xf
+a60axFo8xqjmMGtxepc5yNZwzNFYjbMvM9lTiyOT/UqtxktzatoS1+asaWXv
+FCmlJWpngJ/kR7k8LmmZoQdqeR9qespDD6lt1a954LnTPNAHe5R9lP4LWQ/W
+juvGa1GqW559Wcva3uXeoccPna0gvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOB/QkICVgySIyS/YsUKrGpgcoTkQWx0NchyxMgjq8Emh08eZi5M
+Dt1PhOSR5dD9i64XmzwuO7HpxSWPzU58etH9DsI/fvwAY1xxjU+eEr3UkKe2
+GYT8ScgcUtwz0H4HAKYvQD4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOB/QkICVows9+PHDzBGV7NixYr/2MwAiYHk8OnFZQayXmL0I5uB
+rpeQGTB7YXph+rH5CWYGujnI+pD14gtbmDnY7ISJEeN3bHrR/UZM+BFSg0+e
+Er3UkKe2GYT8ScgcUtwz0H4HAHwwcn4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNUjEOwjAMjICBsV/gF6yMrEXsaUWoWIKUIiF+lCd2KwnCkjmOhEru1XZ8
+58be9Nf2vDDGjOv0arv7LoTucWiSc/TjZfDutPc3N7iw7Zcp2LxtZV7PHGOc
+GYpN0/QRt9Z+5QQlh4h5scxZ4tff2Ff2c77EwfQ05jrkQH3x2T1JrSD2jcj6
+YxqoXZoPy9dqMYf/UarV+nr+WjNjjtX2Q87gnUu8th+sXvpns0UOfQbzvziw
+V3Yveq61/WC9Mx6mgfPX9s9+PAFbrgGG
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/ihUr/ickJIAxiA+jYWwQ/vHjBxjD+MgYmxnIYvj0opuBrBdm
+PzH60e1FdjspbkB2Ny4zsJkD04fsB3x2IZuDzU5i/Y4e9qSaMRr/Izv+AWrM
+QD4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNUcsOgjAQbNSDR37Bv/Dq0SvGeyEi8YIJmBj/qJ/IDahxzGTcgiRL292Z
+fc2uvOfXlXOu206/vHge2rZ4nbLpcW66W91Ul2PzqOqq3ZfryZl9bOPe3xBC
+GLz3P2eMweKbY33ff88Yxxs8jsEPgz/mindwuRb83AvqAweM8rlHnY8xqM8x
+nDwv+7V3C8N83iHmYa7irN1bXK3HM8GsWTXHkr6pHMyf09fqjfv4R1/OAa5q
+kdKXcZqLMSl9mau71x1a+s7tX2dN6at713mW9LW0Q3wEeahwhg==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/ihUr/ickJGDQIDlC8j9+/IDTIDGYOIgGiRGSB5kFkwOxQRhm
+LzqGycP0wsxDdy8hjOwPZLtJ1Y9sP7F6YRhZPylupxZGdjO57keOf3L0I8c/
+qfrR458c+5Hjn5L4Q7cfOY1jo7HFP8wMQnpx+Rc57xAyA1ktABWep9c=
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/ihUr/ickJGDQIDlC8j9+/IDTIDGYOIgGiREjD5OD2YcuR6o8
+zH3EysP8BJOD2QFTg08emxyp8tjchq4OlzwyBskhY2LlR+N/5MY/AJLlR14=
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//oPoFStWgOmEhAQwDcP45GFsmBp0vcTKI5uPzCdFHlkN
+Lr9gk4epQZeDmU9IHtkedHuJlcdmPjHylPibmPgdjf/hHf8AIDW/Lw==
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxNjZIDQjDxGH8FStW/MenH58+GMamnxh92PST
+og9ZP6n6QPbBMLn60M1AxsTqw2UWqfqwhQm+MEN3G644wSZHqv6Bcj+IhsUr
+PkwL/ejpEh8mJozxYQBlabUm
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxNjZIDQjDxGH8FStW/MenH58+GMamnxh92PST
+og9ZP6n6QPbBMLn60M1AxsTqw2UWqfpwhSksXPGFHyH9lNo/0Prx+X04+B8A
+Sq4EDQ==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxNjZIDQjDxGH8FStW/MenH58+GMamnxh92PST
+og9ZP6n6QPbBMLn60M1AxsTqw2UWOfqQ3YFsN8xvuDA2/chi+MIeW1gOBv2E
+9BDSTwrGFXeUhD8pGACxgpmu
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxqexR/eTrB+klRz9MH6n2I+sjxX5c+lasWIFX
+Pz59MIxNPzH6sOknRR+yflL1geyDYXL1oZuBjInVh8ssUvQBAF3smQY=
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxqexR/aP6R/WTpx+klxz9MH2k2o+sD6YXAKto
+nc4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8//ickJIAxqexR/aP6R/UPXf0ApfaoHg==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8/yMYg/YTMWLFiBQqNjBMSEuBm4DIHXT8yDdOPbA4hN6Pr
+h+kF8Yk1A9396GYQGwbI7obpxWYGLv249MLMJSb+YDS6XmLCAtkebHoJmYHN
+/8h8Qm5Bl8cVDrjSB7b4R6YJpQ9c8Y8ujit94It/dHdjSx+E/E1IHgCg9aR2
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8/yMYJCQn/QWaQaw5IPwiD2OSYg6wfxibFHGz6SfEXPv3E
++IsY/fj8RYp+bP4iRz+yv0a6fpgZlNiPbA659pMTryC1AG9d2Z4=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/jx8/yMYJCQn/QWaQaw5IPwiD2OSYg6wfxibFHGz6SfEXPv3E
++IsY/fj8RYp+bP4iRz+yv0b1D239AEHJ4+4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8leMWKFSMaA4OQIkxp+FPDfnz+IyT/48ePIY0pjf+Bdj+l
+GAB+rAH9
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8leMWKFVTBP378gNMwTIo8uXgw+B/dT9j8jk9+qPt/NP4H
+Lv4B7wbrng==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8l+MePHxRhoBMowjB3gNgrVqwAY2RxcuVBNLHyMDFkP1Eq
+D6KJlYeJY4sTYuSxqcEVz6TK0UOe2mYQ8ichc0hxz0D7HQAZcJHO
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8M//jxA4yRxUAYqAyFXrFiBVgdjI9PL0wfNr0gNjH6YepB
+GJteYtyPbAZMLz4z0M1B1o+sF5ebkc1CdjtyuCGbgc8c9PBHD3tSzEC2k1gz
+RuN/+MY/AKz6bQ4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8M//jxA4yRxfBhoHai9CKrQxZbsWIFUfpB6pDNQNdLihm4
+9KKbgW4OTC9MP8w9+MILZg6yPmS9yGbgMwfdTph5pPodPS5IMYOQGynRSw39
+1DYDm1psctQIE2LCllZ+BwD3rHfu
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8M//jxA4yRxYiVp0QvNeSpbQYhf8LkKfXTYPT7aPyPnPgH
+AJn8pL4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8M//jxA4yRxYiVp0QvNeSpbQYhf8LkKfXTYPH7aNyTHvfU
+cM9A+x0AGkukvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8M//jxA4yRxYiRo1QvNfRT2wxsarHJUSNMiAlbWvudlvFL
+a3lqm0HIn5TGB7pZA+l3AMxrpL4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jx4z+pbKB2kvUMN/0wMyixH9kccu1HNocU/StWrMBp
+DrH6YRifOcToJ2QOsfqJcQ9MP4iGYVLNQddPjjnY9OMyB9leQnqxmYNNDwDk
+5pkG
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jx4z+pbKB2kvWM6h/VP5z0w8ygxH5kc8i1H9kcUvQD
+ANGonc4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jx4z+pbKB2kvWM6h/VP6p/8OgHAKQUqB4=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfBgGKgFjGBtEr1ixAqwWxselFyaHbAayXhCb
+kH6QOmQz0PUScj82M2B6cZmBbA6yH9H9gc0ubO5BdjtyuMHCApe7YWrQwx/Z
+DGL8jh53pJgxGv/DO/4BhdZlvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfBgGKsEQQ5fDpReEV6xYgdUMkBhIjpB+bGYg
+6yXkfnQzsOlFNwPZHJi9ML0w/fjCBd09yPqQ9YJoQu7GZidMjBi/Y9OLK24J
+uQWfPCV6qSFPbTMI+RMmT6mfBtrvAERKcn4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfBgGKsEQQ5fDpReEV6xYgdUMkBhIjpB+bGYg
+6yXkfnQzsOlFNwPZHJi9ML0w/fjCBd09yPqQ9YJoQu7GZidMjBi/Y9OLLW4J
+uQOfPCV6qSFPbTMI+ZOQOaS4Z6D9DgDEinJ+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfGwYlxpK9FJDP7XNoFQNqe6hlpsGKvxG43/o
+xj8ANjykvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfGwYlxpK9FJDP7XNoFQNqe6hlptoGX6UxB+t
+5altBiF/EjKH1LQ2kH4HAOhcpL4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfHSMT54SvdSQp7YZhPxJyBxS3DPY/E6OGkrN
+Hyx+JCU+qBme1HITOe4BAOhcpL4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfHSMT54SvdSQp7YZhPxJyBxS3DPY/D4a/yMr
+/gGai6S+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4T8I//jxA4xhfHSMT54SvdSQp7YZhPxJyBxS3DPY/E5t82lt
+Ny3MwKaWlLgn1j3Exj8t/Q4ATLqkvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4f+KFSv+w2hiMLIeGBtoFEkYm34YnxAmpB+Xnbj0//jxAy4P
+okF8ZAxSi00NMfphepHdSKx+ZL2k6kfXS6x+QuEHY+PTjy/eYGpx6Ye5GxtG
+Tme49KP7GVvapaV+YtMvNv2kYJh+5PxECobpAwCBz1am
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4f+KFSvIxj9+/KA5BjoTBcPESNGLTRxEE/Ifup3Y2KTYj4tN
+qv9J0Y8PE4p/QvL0iH9aYkrS/nDwPwDmaXnN
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAOCEh4f+KFStw4h8/foAxUClOOWLwYNWPz++j/kfgwRp+lLoflP4J
+YVrqB4kTg3GFLbH+x6UfAN+tGqU=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJydU0EKwkAMLOrBY7/gL7x69Frx3hbX4mWFVhB/1Cf2tm7AgTAkW/CQbpPJ
+JBsme+ifzX1TVdW0z5+me5/Gsftc6uxc4/QYYrid4ysMYTz22xysf7bL1rZt
+WpYl5d80z3MSX0x8GOJ8CoZTaoCra6C2xsFDjPsgJr7kcB64HAdH17LyNMb9
+eF7kaAx34Hk8nLkWn/tzHt9dz2xxvRxtiGv9mbu2H6wz913bD2t+b1ZrP0r6
+W/dhjT39vX7We/D0t05vf0r6l/B/5tb4F9Pc97c=
+      "], {{0, 16}, {16, 0}}, {0, 
+      255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf+BFBgnJCSAMTL/x48fcHF0NkgNSD8M4zOHGP2EzCFWPzHu
+gekH0TBMqjno+skxB5t+XOYg20tILzZzsOmBuQUXxmY/MX6FYWS1Q1E/If+j
+xwkxmNzwxxaHlNoPAMBRma4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf+BFBgnJCSAMTL/x48fcHF0NkgNSD8M4zOHGP2EzCFWPzHu
+gekH0TBMqjno+skxB5t+XOYg20tILzZzsOkBuQNfGMLUYQtrYu0fzPrx+X0k
++B8AMMIEDQ==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf+BFBgnJCSAMTL/x48fcHF0NkgNSD8M4zOHGP2EzCFWPzHu
+gekH0TBMqjno+skxB5t+XOYg20tILzZzsOnBF37odqOLEaMfZg8u/cRicu0n
+5H5YXODDtNSPHqe4MK6wJdb/uPQDAD+FtSY=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf+BFBgnJCSAMTL/x48fcHF0NkgNSD8M4zOHGP2EzCFWPzHu
+gekH0TBMqjno+skxB5t+XOYg20tILzZzSNGDjrGFNT6/wsKY1vqp5X6Yfbjs
+oJV+St2PKwyJDT8A7jDvvg==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9BGMhEwTBxYjBIfUJCwv8fP36AMYhNrBnoetHNIAbj048u
+jo5h+tHdD9MPY+PCyG7AJo5NHj2c0dUgyxEyjxrxB9OPHG4wswmF36j+oa0f
+AKC3wf4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9BGMhEwTDxHz9+4MUwvQkJCXAxEBtmBiH96HrRzaCXfnT3
+k6If2QxkvcToRw57dL3Ehj+l8QfTjxxuIHpU//DXDwA3LCSt
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9BGMhEwTDxHz9+4MUwvQkJCXAxEBtmBiH96HrRzaCXfnT3
+k6If2QxkvcToRw57dL3Ehj8l8TeKRzYGANa1hi0=
+      "], {{0, 16}, {16, 0}}, {0, 
+      255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9BGMj8/+PHj/8JCQlgNogGiYPE8OFR/cNHPzKGiRODYfbB
+zIS5gRy96GYQg/HpJ+R/mH509yOHIz6M7AZs4tjk0cMZXQ2yHCHzKI0/AO2q
+wf4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9BGMj8/+PHj/8JCQlgNogGiYPE8OFR/aP6R/UPXf0AzN8w
+rQ==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4YSEBILyQGOwYpDcjx8/8GKQOnQxkLm45Ajph+mFuYsU
+/ch6QWyQHKHwgelH10uK/dj0Equf0vCH2UUuJhQ+wx3jCntiMaXhT6n9APYG
+rz4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4YSEBILyQGOwYpDcjx8/8GKQOnQxkLm45Ajph+mFuYsU
+/ch6QWyQHKHwgelH10uK/dj0Equf0vAn5D9aY0Luo7X7YWE9UBhX3BGLKfU/
+ALcL3b4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4YSEBLzyP378oBgDnYFCo4uToh8bm5BedD3ImFD4INuB
+7g9i7adEP6WYUPzSI/4HEhOKX0J4oN1PKQYARG95zQ==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf+JwUClKJhYfTC9CQkJ/3/8+AHGIDbMDHRzsWFkvehmoIuj
+Y0L6QTQ+jKwGWS9MDtmN2MSxySOrwaUHJo4cRuhqSY0DbPFHKPyQ9aOH26j+
+oa8fAC2Jwf4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwUAjKMKU2Its/48fP+AYWQydxsUmhcZnPi71+Owj1T24
+/EKMedjUUIoTEhKwYmLlKcGUpj+YW2DhAUtT6G6llTx6esKXp7DJw/IDslkg
+Nnp+wSUPAPN3eW4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwUAjKMLUsP/Hjx9wjMxHZ8P42NyBTQ2lNC6zsanHJU4s
+Ta5+auCEhASsmFh5SjCl6Q/mFlh4wNIUultpJY+eTvDlKWzysHyAbBaIjZ5P
+cMkDAHfpeH4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwQkJCf+BxmDFIDlC8iD6x48fKBhkLoiGqSNFHiaHbC+x
+8shyIDYp8uhy6Objk8cmR6w8peFPKaY0/Qx1jCtsicWUhj+l9gMADylcjg==
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwQkJCf+BxmDFIDlC8iD6x48fKBhkLoiGqSNFHiaHbC+x
+8shyIDYp8uhy6Objk8cmR6w8peEPMxNf/OKTR4+boYYpTf8D7X5KMQBHdw7t
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwQkJCf+BxmDFIDlC8iD6x48fKBhkLoiGqSNFHiaHbC+x
+8shyIDYp8uhy6Objk8cmR6w8peFPafxTitHjllRMjfQ7kBhX3BCLKfU/ANAf
+iw4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwQkJCf+BxmDFIDlC8iD6x48fKBhkLoiGqSNFHiaHbC+x
+8shyIDYp8uhy6Objk8cmR6w8peGPHrakYnzpgh7yxGBsaQjd/fRyL7o4peGP
+y07k8MEnDwAT6uN2
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwQkJCf+BxmDFIDlC8iD6x48fKBhkLoiGqSNFHiaHbC+x
+8shyIDYp8uhy6Objk8cmR6w8peGPHrakYnzpgh7y1HI/vdyLLk5NP+AKH3zy
+AEqP5l4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8HEgOdQBH+8eMHRTghIYEiDHMHNjFkjEselx5c9qDLUxr+
+lIbfKB7aGACV3i5t
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf8pwT9+/ABjbGLImJA8TA0uOULy5NpPqf/J9S+hsCA2PCi1
+fzT+R3b8AwDzzoMt
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4R8/foAxUClWuYSEBLAcNgySI6QfJA5TA8PY5IjVj+4u
+UvQj6wWxSdGPrpcU+7HpJVY/peFPKP5hmFz9hOwnFtPK/bCwxodpqR9X3KFj
+XGFLrP9x6QcAoivH5g==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4R8/foAxUClWuYSEBLAcNgySI6QfJA5TA8PY5IjVj+4u
+UvQj6wWxSdGPrpcU+7HpJVY/peFPLMalH1e6Qbablvqp5X6YfaSmf0r1U+p+
+XGFIbPgBAFDlAo0=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4R8/fuDFCQkJ/4HGYMUgOVzmguRA+kHq0M2E2QuSI1U/
+TC/MXYTcj6wGWS+IjWw/zD50d8D0o+uF2U+Mfmx6iXU/ofDHZieyeyjFhOKH
+1vLUcj+93Etq/iI3DpDDB588APSvJN0=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf/x4R8/fuDFCQkJ/4HGYMUgOUL6QerQxWD2YpMjpB+mF+Yu
+UvQj6wWxSdGPrpcU+7HpJVY/peFPKP5pjQm5j9buh4X1QGFccUcsptT/AL1O
+7ZY=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9h+MePH/+R+egYl3xCQgJWOZA4MfLociA+shgheXRxXO7E
+Jg9zA7I8srsJyRMjR6w8tnAjRh7dLFzhTAiPxv/Ii38AlkMSrQ==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNUrsOwjAQi4CBsb/AX7AyshaxtxWlYglSi4T4o3xitpJIWDLmUjE4p9zD
+8V1u193r68o5N23TUbfPwzi2r1OVLmc/3QbfX47+0Q/9uO/WyVl9sEkIIcwx
+xpltcn+haZqfHLU5JyPnww8wzxKHVYs7OPAW58GX41Yt9LMG7ol1qy7ugTlU
+G/pXfTobnRHPm2thuQYWWkocgP5J6R84/u/7pbjWLnGobotL95Dv+FuNWz5r
+p3lOVk4JPD/u2cpTf2n/rD1RfVat2iUtut8Zb+dBUNY=
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyVUjEOwjAMjICBsV/gF6yMrEXsaUVasQQpRUL8KE/MVhLUkyxjt3S4uvX5
+Lpc0h/ZRdxtjzLDPj7p5nUJo3pcqf1z9cO+9u5390/UuHNttblYTdhkxxjGl
+NEoVmONpD9A0Ei9xS95ctzaztoe1Wm2/2vlo/BL3j5ZDy875fAW+1Vr7UwsH
+XqoFxQe1aKArFfnoHOXRhxaeVIusdF06K+mRH/05DzrDec2DZ5XOBXp+rpSn
+czy75COtgXdwFJTj/w+eHz31yfY=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PjxHxsNw/jkkcVgGJcebPLY5AiZja6PVDfj8gOpenH5
+F1f44JInJEeMXnSMy+3o8sAkAKYTEhIwaJAcIXmQOTAaJAYTB9Ew9xGSh8nB
+7EOXI1Ue5j5i5WF+gsnB7ICpwSePTY5UeWxuQ1eHSx4Zo8cxMfIAzubb3g==
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PjxHxsNw/jkkcVgGJcebPLY5AiZja6PVDfj8gOpenH5
+F1f44JInJEeMXnSMy+3o8gkJCRRhbGaTg4mJa3zy5OLB4H98eYMYeUowAFgw
+Lg0=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PjxHxsNw/jkkcVgGJcebPLY5AiZja6PVDfj8gOpenH5
+F1f44JInJEeMXnSMy+34/D8a/yMv/gH5gHBt
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PjxHxsNw/jkkcVgGJcebPLY5AiZja6PVDfj8gOpenH5
+F1f44JInJEeMXnSMy+34/I/Pv9gwsfEPwwkJCWCMy1/47EXWh8sMXP6DqYfZ
+DxMjJv6R7UNWg+wGfPGLbDc2MWLiF+ZudExM/GMzB1kfAJmIXs0=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PjxHxsNwyA+NoyuB5d4QkICijwyH5tedHtBbJgedLPw
+uRmXGcT4F5ffiA0HdD/gCwNCetH1YNOLjnGZgx4GhOKXUPog1W+4zMLnN0Lp
+A1/8EopjQvFLTNoiNo0TimNi0jiueCFkL670AQCmgn9t
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyNUjsOwjAMjYCBsVfgFqwdWYvY04q0YglSioS4UY6YrcQSll4th2Z4des+
+P39Pw7Mbd8aY+ZgfXf9uQ+g/1yZ/3Pz8mLy7X/zLTS6ch312Nj8cMmKMS0pp
+2bKZurLsx3dr7cqSn/gE8qHl/wT0sWUNjmEe/2MecjR99MtasTbsR9ZDqMmP
+s9L6lr3ifJCL0GaI/cj+JZdzog7uVtsvxyPk3rf2jxqlWNx/6d647tJdlnRl
+/L/82l1oelqdNTx5hzX55fxkLO5f09B0tP6/pvmh1g==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PiBFYPkYPLYaHS9CQkJYIzNHGx8ZHFkfchsbHrR3QVT
+D7MfJobLzejiMP3I8shixOiF2YfuHlz+RTYL5m50jCsMsbkDW/hjczu6XkLx
+S0z8E4pffPLExC8+eXLcjMsP5IQHMfFLSJ6QHDF6ccUvIXkAI11ezQ==
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PiBFYPkCMmD6ISEBBRxUvkgc2Bi6HLEyKOrQXYbIXl8
+/iNGnlw/Y/MHIT9ik0d3H7ocqfKj8T+y4h8AU4SObQ==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmAeMWKFf9//PiBFeOTQ8YJCQl4+TBzcJkHEofpQdeLTT8285DNIOR2
+ZP3E+pHWYYCsh5gwwOVPYsOAWExsOOJTS2rYYKPxhQ0xYUVK+iDW/6TEL63T
+B7HuRw8DAEs/qo0=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/+BFFkYpBemPyEhAYzxqcemBtkMZD42DFOzYsUKuDnkuh/Z
+HSDzSMXofgCZh8/tML+j+wVZP0wemcbFxhaGpGB89uNyPzJNjvvx6SfX/ZTG
+P0g/KD6RaRhGFkdPc4T0Y9ML04NuFi6MbAayfmQ2oXDC5QeYOQD5fpNm
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBgoHC/0HiIJyQkIAhj4wJ6ScGD2b9+Pw+nP1PyN/E
++n+gwo9S94NoUNonhGmhH2YGMZiYMMaHAd8eGqU=
+      "], {{0, 16}, {16, 0}}, {0, 
+      255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBgoHC/0Hi2OTQMSH9CQkJYD42DJIjpB+ZjewmZDlS
+9MP0wtxFin5kvcjqiNGPrpcU+7HpJVY/ueFPKN6JjX9K9RODaeF+5HDGh2mh
+H2YGMZiYMMaHAfgyx+Y=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBgoHC/0Hi2OTQMSH9CQkJYD42DJIjpB+ZjewmZDlS
+9MP0wtxFin5kvcjqiNGPrpcU+7HpJVY/peFPDCYn/cDsprV+arkfV1jRWj+l
+7scVhjD3AAAjIQKN
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBgoHC/0HixGJ8+tHlYDghIYEu+qnlfph96GpprZ9S
+9+MKQ0LhhyvcyfU/ufrJ9T+l7oeFESFMC/0wM4jBxIQxPgwAomEGZQ==
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBFYPkCMkj0+hyCQkJRMmjq0GXI0Ye2b3Y5EiRJyc8
+SPEvujw5/kUOe0r8C5KjBOMKq5GCgVmIIkxp+FNqPwC9x71+
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBFYPkCMkj0+hyCQkJRMmjq0GXI0Ye2b3Y5EiRJyc8
+SPEvujw5/kUO+4Hw72j8D4/4BwBoWytt
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9XrFiBFYPkkDFQORgji8HUYdObkJBAlH50M2B60d2ATz+y
+WphecvXjCgNC7kd2Myn60d2MbAYh/dj0khJ/IL34MLJ5hMKPkBuGon5C/oeJ
+kYLJDX+YG6hpPwBxbuOm
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9hGMgFY2QxEF6xYgVWjK4Om36YOmx6ExISiNKPbgZML7ob
+8OlHVgvTS65+XGFAyP3IbiZFP7qbkc0gJv7Q9RKKP2Q1IL34MCnhR8gNg0U/
+IT2E9JOC0fWjm09O+JOCATR346Y=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/+RMVCIJIxNL7qZxGJs+lesWIEX00I/snxCQgJeTKz9IDZI
+PYxNivuR9SLrI0Y/Nr3Y7Mann5iwI+R+bHpJDT9cYUls/GMLD3L0k5P+Bmv8
+AwDjoBQV
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyVksEKwjAQRIN68Nhf8C+8evRa8Z4WY/ESIRXEP8on5lZTMDKss209TCHZ
+vOnOsrv2Xl9Xxph+mz918zyE0LxOVT6cfX/rvLsc/cN1Luzbdb6sPtpkpZQG
+plz6kfaWcdbaIcb41Xie80GO1dFHY5f0yDzGs/Zf1gfjMbPGaRmQl7NDjvGl
+H6zLWZQ7yRfvkn8Jj/nRT/bLsk/xMrfGy/4l/09+rJUMc7zcNWRw/9nOaXuK
+HvgWxfqampEUY96L2eu2
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/+x4YSEhP8rVqzAKkdIHiSHTOOTh2F0c0GYWHl0M2FyMJoY
+eXT70PXhkselBjls8Mkj+wXdT8TIo6vBFi+E5Efjf+TGPwDVBhQt
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJyVUjEOwjAMjICBsV/gF6yMrEXsaUWoWIKUIiF+lCdmg7TC6HRySzM4J8e+
+c3LJrr3X15Uxpt/mpW6ehxCa16nKydn3t867y9E/XOfCvl3nzeobmxwppfdc
+5JYfxhhHtNaOKLW5kF7RQG4JH+djXsJHDcElfNFgbsl81kBfSu+PPix5P43L
+ukPOOMXl+YLo1YDaH2I/tHsiVzz+9/+0+8j+nAb2cH1Kg8+q+SJ89hXr2Mdn
+13S0Gfy3MbDG7yeaH+Spfn4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//xYaASOL1ixQownZCQAKZhcvgwTC3MDGS9pOhHth+ZT4p+
+ZDNgNDH6YWag6yXFfnQzkMOFVP8jhwMx8YdNL7H2j8b/8I5/AD/f2W4=
+      "], {{0, 16}, {
+      16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVoAxUCkKhokTox+kPiEhAS4GYsPMIKQfXS+6GfTS
+j+5+UvQjm4Gslxj9yGGPrpfY8Kc0/mD6kcMNRI/qH/r6ARiyJK0=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVoAxUCkKhokTox+kPiEhAS4GYsPMIKQfXS+6GfTS
+j+5+UvQjm4Gslxj9yGGPrpfY8Kck/kbx8MYAh4eGLQ==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVoAxUCmYn5CQAGaDaJD4qP6hrZ9YDNKDjEnVC7IP
+5iaYG7CZiw0j60U3g5D/CekH0fgwshpkvTA5ZDdiE8cmj6wGlx6YOHIYoaul
+RvwBAHp8wf4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVoAxUCmYn5CQAGaDaJD4qP5R/aP6h65+AC5WMK0=
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVpCFExISwPpBNNAarBgkR0g/SB02N+GSQ8foamB6
+Ye5Ctw/dHcj6kfXC5IjVj64XZj8x7semF1k/JeFPyH5y0weu8KC2PLXcTy/3
+ootT0w+4wgefPADDJyTd
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//x4RUrVuDFhPQnJCT8B1qDFYPkCOkHqcPmJlxyhPTD9MLc
+RYp+ZL0gNin60fWSYj82vcTqJxT+hOKX1piQ+ylNn4QwLCwHCuOKG2Ixpf4H
+AA8R7ZY=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/+JwUCl/1esWIGCQeLoYjCckJBAF/3Ucj/MPlx20Eo/pe7H
+FYaUhj86Jlc/veKPXPeDwokQpqV+kDgxGFfYEut/XPoBGtIGZQ==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//JxUDtZOsD4YSEBLL0gdggvcTqR7YPpocY/ejuJFY/LncS
+0k/InbjYxLoTG5sUd47qp65+UtMJsp2w+CZFP3r6ArEBAaTZng==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//JxUDtZOsD4YSEBLL0gdggvcTqR7YPpocY/ejuJFY/LncS
+0k/InbjYxLoTG5sUd47qH376Afwj4+4=
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH//JxUDtFOldsWIFWfpgmBK9ILtJsR/ZTlLdjqwX2d6EhASS
+whlZL7FuQPcruhnkhBcx+mF60PVjcweh+EU2A6YXm93Y3IscZ+hmIduPL36R
+wx+XPK74xRf+6OGILX7R/Y3uJkLxiyvuYPIARH8nNQ==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8pwStWrMCKExIS6CJPLffTy73o4tT0A67wIce99MK0Sn/E
+YlA4DCQGZkGKMKX+BwDy5gf9
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8pxStWrEChKZUnlaa2ewZDGNDDzSAMTAJgMxMSEjBokBwh
+eZgZIBokBhMH0ch24JOHycHsQ5cjVR7mPmLlYX6CycHsgKnBJ49NjlR5bG5D
+V4dLHhmD5JAxMfIAligHDQ==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8pxStWrEChKZUnlaa2ewZDGNDDzSAMTAI4wxUkB5NPSEjA
+oGHyyOpgekHyyHbAxGD6YPLIepHVofsV2T50s5HdDZOHuRGbfmQ5ZHfD3IdN
+L8xsZDtgZsLEsIUVNr3I+tHdhS6HTQ16WOCyA1f8wDBIDAAShAiN
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8pxStWrEChKZUnlaa2ewZDGNDDzSCckJBAEQa5hxoYm99I
+kScXDwb/44pnYuUpwQAfclkt
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8pxStWrEChKZUnlaa2ewZDGNDDzYPV76PxT7/4BwBC+sat
+
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/8HAwY6BQWTIo8uh66GHvIrVqyAiyckJJAlD8IguZEoD6Jh
+8rCwIlUepoYceZAYsh2kyMP4yHIgmlh5ZDXY5IiRJxcDABnuv74=
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9H8cjFK1asAGNgUkDBMHFi9IPUJyQkwMVAbJgZhPSj60U3
+g1760d1Pin5kM5D1EqMfOezR9RIb/pTEHwDjioYt
+      "], {{0, 16}, {16, 0}}, {0, 
+      255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9H8cjFK1asGFAMTIIUYUr9n5CQQBGGuQObGDLGJY9LDy57
+0OUpDX8ALQMubQ==
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9H8SjGhVesWAHGwKSCgmHixOgHqU9ISICLgdgwMwjpR9eL
+bga99KO7nxT9yGYg6yVGP3LYo+slNvzxxR8AlFyGLQ==
+      "], {{0, 16}, {16, 0}}, {0,
+       255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Exif" -> Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com"], "Comments" -> 
+        Association[
+         "Software" -> 
+          "Created with the Wolfram Language for Students - Personal Use Only \
+: www.wolfram.com", "Creation Time" -> DateObject[{2016, 10, 31}, 
+            TimeObject[{0, 1, 58.}, TimeZone -> 1.], TimeZone -> 1.]]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9H8SimBK9YsQKFplQ/tc0bimFALwwALvnobQ==
+      "], {{0, 16}, {16, 
+      0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}], ",", 
+   GraphicsBox[
+    TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+MePH/9H8SgexSMTAwAXfPOt
+      "], {{0, 16}, {16, 0}}, {0, 255},
+      ColorFunction->RGBColor],
+     BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", Interleaving -> True, Magnification -> 
+      Automatic, MetaInformation -> 
+      Association[
+       "Comments" -> 
+        Association[
+         "XML:com.adobe.xmp" -> 
+          "<x:xmpmeta xmlns:x=adobe:ns:meta/ x:xmptk=XMP Core 5.4.0> <rdf:RDF \
+xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#><rdf:Description \
+rdf:about=xmlns:tiff=http://ns.adobe.com/tiff/1.0/> \
+<tiff:Compression>1</tiff:Compression> <tiff:Orientation>1</tiff:Orientation> \
+<tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation></rdf:\
+Description> </rdf:RDF></x:xmpmeta>"]]],
+     Selectable->False],
+    DefaultBaseStyle->"ImageGraphics",
+    ImageSize->Magnification[1],
+    ImageSizeRaw->{16, 16},
+    PlotRange->{{0, 16}, {0, 16}}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.692877288571191*^9, 3.6928773007375927`*^9}, 
+   3.6928773342288218`*^9, 3.692877382018042*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tileglyphs", "=", 
+  RowBox[{"FromCharacterCode", "/@", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"Range", "[", 
+      RowBox[{"Length", "[", "tileset", "]"}], "]"}], "+", "16^^3400"}], 
+    ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.692877514079254*^9, 3.692877532722068*^9}, {
+  3.69287760315086*^9, 3.692877630509213*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"\:3401\"\>", ",", "\<\"\:3402\"\>", ",", "\<\"\:3403\"\>", 
+   ",", "\<\"\:3404\"\>", ",", "\<\"\:3405\"\>", ",", "\<\"\:3406\"\>", 
+   ",", "\<\"\:3407\"\>", ",", "\<\"\:3408\"\>", ",", "\<\"\:3409\"\>", 
+   ",", "\<\"\:340a\"\>", ",", "\<\"\:340b\"\>", ",", "\<\"\:340c\"\>", 
+   ",", "\<\"\:340d\"\>", ",", "\<\"\:340e\"\>", ",", "\<\"\:340f\"\>", 
+   ",", "\<\"\:3410\"\>", ",", "\<\"\:3411\"\>", ",", "\<\"\:3412\"\>", 
+   ",", "\<\"\:3413\"\>", ",", "\<\"\:3414\"\>", ",", "\<\"\:3415\"\>", 
+   ",", "\<\"\:3416\"\>", ",", "\<\"\:3417\"\>", ",", "\<\"\:3418\"\>", 
+   ",", "\<\"\:3419\"\>", ",", "\<\"\:341a\"\>", ",", "\<\"\:341b\"\>", 
+   ",", "\<\"\:341c\"\>", ",", "\<\"\:341d\"\>", ",", "\<\"\:341e\"\>", 
+   ",", "\<\"\:341f\"\>", ",", "\<\"\:3420\"\>", ",", "\<\"\:3421\"\>", 
+   ",", "\<\"\:3422\"\>", ",", "\<\"\:3423\"\>", ",", "\<\"\:3424\"\>", 
+   ",", "\<\"\:3425\"\>", ",", "\<\"\:3426\"\>", ",", "\<\"\:3427\"\>", 
+   ",", "\<\"\:3428\"\>", ",", "\<\"\:3429\"\>", ",", "\<\"\:342a\"\>", 
+   ",", "\<\"\:342b\"\>", ",", "\<\"\:342c\"\>", ",", "\<\"\:342d\"\>", 
+   ",", "\<\"\:342e\"\>", ",", "\<\"\:342f\"\>", ",", "\<\"\:3430\"\>", 
+   ",", "\<\"\:3431\"\>", ",", "\<\"\:3432\"\>", ",", "\<\"\:3433\"\>", 
+   ",", "\<\"\:3434\"\>", ",", "\<\"\:3435\"\>", ",", "\<\"\:3436\"\>", 
+   ",", "\<\"\:3437\"\>", ",", "\<\"\:3438\"\>", ",", "\<\"\:3439\"\>", 
+   ",", "\<\"\:343a\"\>", ",", "\<\"\:343b\"\>", ",", "\<\"\:343c\"\>", 
+   ",", "\<\"\:343d\"\>", ",", "\<\"\:343e\"\>", ",", "\<\"\:343f\"\>", 
+   ",", "\<\"\:3440\"\>", ",", "\<\"\:3441\"\>", ",", "\<\"\:3442\"\>", 
+   ",", "\<\"\:3443\"\>", ",", "\<\"\:3444\"\>", ",", "\<\"\:3445\"\>", 
+   ",", "\<\"\:3446\"\>", ",", "\<\"\:3447\"\>", ",", "\<\"\:3448\"\>", 
+   ",", "\<\"\:3449\"\>", ",", "\<\"\:344a\"\>", ",", "\<\"\:344b\"\>", 
+   ",", "\<\"\:344c\"\>", ",", "\<\"\:344d\"\>", ",", "\<\"\:344e\"\>", 
+   ",", "\<\"\:344f\"\>", ",", "\<\"\:3450\"\>", ",", "\<\"\:3451\"\>", 
+   ",", "\<\"\:3452\"\>", ",", "\<\"\:3453\"\>", ",", "\<\"\:3454\"\>", 
+   ",", "\<\"\:3455\"\>", ",", "\<\"\:3456\"\>", ",", "\<\"\:3457\"\>", 
+   ",", "\<\"\:3458\"\>", ",", "\<\"\:3459\"\>", ",", "\<\"\:345a\"\>", 
+   ",", "\<\"\:345b\"\>", ",", "\<\"\:345c\"\>", ",", "\<\"\:345d\"\>", 
+   ",", "\<\"\:345e\"\>", ",", "\<\"\:345f\"\>", ",", "\<\"\:3460\"\>", 
+   ",", "\<\"\:3461\"\>", ",", "\<\"\:3462\"\>", ",", "\<\"\:3463\"\>", 
+   ",", "\<\"\:3464\"\>", ",", "\<\"\:3465\"\>", ",", "\<\"\:3466\"\>", 
+   ",", "\<\"\:3467\"\>", ",", "\<\"\:3468\"\>", ",", "\<\"\:3469\"\>", 
+   ",", "\<\"\:346a\"\>", ",", "\<\"\:346b\"\>", ",", "\<\"\:346c\"\>", 
+   ",", "\<\"\:346d\"\>", ",", "\<\"\:346e\"\>", ",", "\<\"\:346f\"\>", 
+   ",", "\<\"\:3470\"\>", ",", "\<\"\:3471\"\>", ",", "\<\"\:3472\"\>", 
+   ",", "\<\"\:3473\"\>", ",", "\<\"\:3474\"\>", ",", "\<\"\:3475\"\>", 
+   ",", "\<\"\:3476\"\>", ",", "\<\"\:3477\"\>", ",", "\<\"\:3478\"\>", 
+   ",", "\<\"\:3479\"\>", ",", "\<\"\:347a\"\>", ",", "\<\"\:347b\"\>", 
+   ",", "\<\"\:347c\"\>", ",", "\<\"\:347d\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.692877631754723*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"conversion", "=", 
+   RowBox[{"AssociationThread", "[", 
+    RowBox[{"tileglyphs", "\[Rule]", "tileset"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.692877651023305*^9, 3.692877749548629*^9}, {
+  3.69287827744526*^9, 3.69287828772366*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"generatedMaps", "=", 
+   RowBox[{
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"StringPartition", "[", 
+        RowBox[{"#", ",", "1"}], "]"}], "&"}], ",", 
+      RowBox[{"StringSplit", "/@", 
+       RowBox[{"(", 
+        RowBox[{"Import", "/@", 
+         RowBox[{"FileNames", "[", 
+          RowBox[{"\"\<*.txt\>\"", ",", "generatedDataFolder"}], "]"}]}], 
+        ")"}]}], ",", 
+      RowBox[{"{", "2", "}"}]}], "]"}], "/.", "conversion"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6928777685336437`*^9, 3.692877837766572*^9}, {
+  3.6928778869981194`*^9, 3.692877916096591*^9}, {3.692878047404859*^9, 
+  3.692878060375534*^9}, {3.6928781352795553`*^9, 3.69287821108248*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"reconstitutedMaps", "=", 
+   RowBox[{"ImageAssemble", "/@", "generatedMaps"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.692878223103417*^9, 3.692878254023247*^9}, {
+   3.692878295355546*^9, 3.692878341132619*^9}, 3.6928784688665657`*^9, 
+   3.692878550158003*^9, 3.6928786593064623`*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"imgFiles", "=", 
+   RowBox[{"StringReplace", "[", 
+    RowBox[{
+     RowBox[{"FileNames", "[", 
+      RowBox[{"\"\<*.txt\>\"", ",", "generatedDataFolder"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<text\>\"", "\[Rule]", "\"\<img\>\""}], ",", 
+       RowBox[{"\"\<txt\>\"", "\[Rule]", "\"\<png\>\""}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MapThread", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Export", "[", 
+      RowBox[{"#1", ",", "#2"}], "]"}], "&"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"imgFiles", ",", "reconstitutedMaps"}], "}"}]}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.692878835829646*^9, 3.69287894015296*^9}, {
+  3.6928789786709337`*^9, 3.6928790763620358`*^9}, {3.6928793206512136`*^9, 
+  3.6928793740908422`*^9}}]
+}, Open  ]]
+},
+WindowSize->{725, 847},
+WindowMargins->{{4, Automatic}, {Automatic, 5}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 105, 1, 64, "Section"],
+Cell[688, 25, 1297, 37, 205, "Code"],
+Cell[CellGroupData[{
+Cell[2010, 66, 818, 22, 96, "Input"],
+Cell[2831, 90, 139584, 3253, 180, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[142452, 3348, 351, 9, 32, "Input"],
+Cell[142806, 3359, 3134, 44, 142, "Output"]
+}, Open  ]],
+Cell[145955, 3406, 280, 6, 32, "Input"],
+Cell[146238, 3414, 738, 19, 96, "Input"],
+Cell[146979, 3435, 322, 6, 32, "Input"],
+Cell[147304, 3443, 841, 23, 75, "Input"]
+}, Open  ]]
+}
+]
+*)
+
