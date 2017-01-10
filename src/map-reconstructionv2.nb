@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    148882,       3498]
-NotebookOptionsPosition[    148161,       3469]
-NotebookOutlinePosition[    148513,       3485]
-CellTagsIndexPosition[    148470,       3482]
+NotebookDataLength[    150692,       3538]
+NotebookOptionsPosition[    149967,       3509]
+NotebookOutlinePosition[    150321,       3525]
+CellTagsIndexPosition[    150278,       3522]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -60,7 +60,9 @@ Cell[BoxData[{
  CellChangeTimes->{{3.692876773601746*^9, 3.692876848767798*^9}, {
    3.69287741269971*^9, 3.69287748013533*^9}, {3.692877874286172*^9, 
    3.692877875864715*^9}, {3.692878788529953*^9, 3.69287878917769*^9}, 
-   3.692878973652485*^9}],
+   3.692878973652485*^9, {3.692973448092206*^9, 3.6929734484696627`*^9}, {
+   3.692974349313511*^9, 3.69297434962432*^9}, {3.693044612430821*^9, 
+   3.693044615178728*^9}}],
 
 Cell[CellGroupData[{
 
@@ -75,9 +77,7 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"Import", "[", "#", "]"}], ",", "16"}], "]"}], "&"}], "/@", 
       RowBox[{"FileNames", "[", 
-       RowBox[{
-       "\"\<*.png\>\"", ",", 
-        "\"\<../data/pokemon-red/original/elements\>\""}], "]"}]}], "//", 
+       RowBox[{"\"\<*.png\>\"", ",", "originalDataFolder"}], "]"}]}], "//", 
      "Flatten"}], "//", 
     RowBox[{
      RowBox[{"DeleteDuplicates", "[", 
@@ -86,7 +86,8 @@ Cell[BoxData[
  CellChangeTimes->{{3.692876904761982*^9, 3.6928769205506897`*^9}, {
   3.692876986089406*^9, 3.692876993157757*^9}, {3.692877046571106*^9, 
   3.692877145205257*^9}, {3.692877191804201*^9, 3.692877280501721*^9}, {
-  3.692877321351982*^9, 3.692877378721539*^9}}],
+  3.692877321351982*^9, 3.692877378721539*^9}, {3.692973431876375*^9, 
+  3.6929734405076838`*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -3341,7 +3342,9 @@ Description> </rdf:RDF></x:xmpmeta>"]]],
     ImageSizeRaw->{16, 16},
     PlotRange->{{0, 16}, {0, 16}}]}], "}"}]], "Output",
  CellChangeTimes->{{3.692877288571191*^9, 3.6928773007375927`*^9}, 
-   3.6928773342288218`*^9, 3.692877382018042*^9}]
+   3.6928773342288218`*^9, 3.692877382018042*^9, 3.692957476312009*^9, 
+   3.6929734175806313`*^9, 3.692973480150117*^9, 3.692974358590562*^9, 
+   3.6929748817744093`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -3401,16 +3404,53 @@ Cell[BoxData[
    ",", "\<\"\:3476\"\>", ",", "\<\"\:3477\"\>", ",", "\<\"\:3478\"\>", 
    ",", "\<\"\:3479\"\>", ",", "\<\"\:347a\"\>", ",", "\<\"\:347b\"\>", 
    ",", "\<\"\:347c\"\>", ",", "\<\"\:347d\"\>"}], "}"}]], "Output",
- CellChangeTimes->{3.692877631754723*^9}]
+ CellChangeTimes->{3.692877631754723*^9, 3.692957479945787*^9, 
+  3.692973491910273*^9, 3.692974361477098*^9, 3.692974882262486*^9}]
 }, Open  ]],
 
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
   RowBox[{"conversion", "=", 
    RowBox[{"AssociationThread", "[", 
-    RowBox[{"tileglyphs", "\[Rule]", "tileset"}], "]"}]}], ";"}]], "Input",
+    RowBox[{"tileglyphs", "\[Rule]", "tileset"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"conversion", "=", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<o\>\"", "->", 
+        GraphicsBox[
+         TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilmA+P8oGAWjYMQCAC7yCLw=
+           "], {{0, 16}, {16, 0}}, {0, 255},
+           ColorFunction->RGBColor],
+          BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+          
+          Selectable->False],
+         DefaultBaseStyle->"ImageGraphics",
+         ImageSizeRaw->{16, 16},
+         PlotRange->{{0, 16}, {0, 16}}]}], ",", 
+       RowBox[{"\"\<X\>\"", "->", 
+        GraphicsBox[
+         TagBox[RasterBox[CompressedData["
+1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz
+UFAAilkYwOD/KB7Fo3hkYgDYEAuP
+           "], {{0, 16}, {16, 0}}, {0, 255},
+           ColorFunction->RGBColor],
+          BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+          
+          Selectable->False],
+         DefaultBaseStyle->"ImageGraphics",
+         ImageSizeRaw->{16, 16},
+         PlotRange->{{0, 16}, {0, 16}}]}]}], "|>"}]}], ";"}], "*)"}], 
+  "\[AliasDelimiter]"}]}], "Input",
  CellChangeTimes->{{3.692877651023305*^9, 3.692877749548629*^9}, {
-  3.69287827744526*^9, 3.69287828772366*^9}}],
+   3.69287827744526*^9, 3.69287828772366*^9}, {3.693044328754807*^9, 
+   3.6930443672182503`*^9}, {3.693044531787387*^9, 3.693044596117317*^9}, 
+   3.693044815600041*^9, {3.693045534648682*^9, 3.693045539092063*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -3450,7 +3490,7 @@ Cell[BoxData[{
       RowBox[{"\"\<*.txt\>\"", ",", "generatedDataFolder"}], "]"}], ",", 
      RowBox[{"{", 
       RowBox[{
-       RowBox[{"\"\<text\>\"", "\[Rule]", "\"\<img\>\""}], ",", 
+       RowBox[{"\"\<text\>\"", "\[Rule]", "\"\<image\>\""}], ",", 
        RowBox[{"\"\<txt\>\"", "\[Rule]", "\"\<png\>\""}]}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
@@ -3464,11 +3504,11 @@ Cell[BoxData[{
   ";"}]}], "Input",
  CellChangeTimes->{{3.692878835829646*^9, 3.69287894015296*^9}, {
   3.6928789786709337`*^9, 3.6928790763620358`*^9}, {3.6928793206512136`*^9, 
-  3.6928793740908422`*^9}}]
+  3.6928793740908422`*^9}, {3.692958298491355*^9, 3.692958298994368*^9}}]
 }, Open  ]]
 },
 WindowSize->{725, 847},
-WindowMargins->{{4, Automatic}, {Automatic, 5}},
+WindowMargins->{{Automatic, -3}, {Automatic, 10}},
 FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
 2016)",
 StyleDefinitions->"Default.nb"
@@ -3486,19 +3526,19 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 105, 1, 64, "Section"],
-Cell[688, 25, 1297, 37, 205, "Code"],
+Cell[688, 25, 1444, 39, 205, "Code"],
 Cell[CellGroupData[{
-Cell[2010, 66, 818, 22, 96, "Input"],
-Cell[2831, 90, 139584, 3253, 180, "Output"]
+Cell[2157, 68, 825, 21, 75, "Input"],
+Cell[2985, 91, 139706, 3255, 180, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[142452, 3348, 351, 9, 32, "Input"],
-Cell[142806, 3359, 3134, 44, 142, "Output"]
+Cell[142728, 3351, 351, 9, 32, "Input"],
+Cell[143082, 3362, 3225, 45, 142, "Output"]
 }, Open  ]],
-Cell[145955, 3406, 280, 6, 32, "Input"],
-Cell[146238, 3414, 738, 19, 96, "Input"],
-Cell[146979, 3435, 322, 6, 32, "Input"],
-Cell[147304, 3443, 841, 23, 75, "Input"]
+Cell[146322, 3410, 1671, 42, 57, "Input"],
+Cell[147996, 3454, 738, 19, 96, "Input"],
+Cell[148737, 3475, 322, 6, 32, "Input"],
+Cell[149062, 3483, 889, 23, 75, "Input"]
 }, Open  ]]
 }
 ]
