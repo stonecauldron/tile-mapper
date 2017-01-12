@@ -4,14 +4,14 @@ abstract: |
   Creating two-dimensional tile maps by hand is a long and tedious process. Tile
   maps contain an inherent structure and repetition that we should be able to
   exploit. We provide a way of generating these maps automatically using machine
-  learning techniques while still allowing the level designer to specify the
-  high level spatial structure of the world. With these set of tools level
-  designers will be able to create worlds that are much larger in scope.
+  learning techniques. With these set of tools level designers will be able to
+  create worlds that are much larger in scope.
 papersize: A4
 documentclass: article
 numbersections: true
 header-includes:
     - \usepackage{graphicx}
+    - \usepackage{mathtools}
 #classoption: twocolumn
 ---
 
@@ -67,6 +67,8 @@ predefined size and assembled into a grid.
 ![An example of a tile-map with the grid structure visible.\
 *Pokemon FireRed (2004)*](img/tile-map-example.png){ width=75% }
 
+*TODO: add one figure with multiples tiles inside it*
+
 <div id="fig:figureRef">
 ![subfigure 1 caption](img/tile-grass.png){#fig:figureRefA width=50%}
 ![subfigure 2 caption](img/tile-flower.png){#fig:figureRefB width=50%}
@@ -112,7 +114,6 @@ from a set of representative examples. Our process has the following steps:
 3. We generate a Markov chain whose probability distributions reflect those of
    the original dataset. This is the learning phase of the model.
 4. We then sample this Markov chain to generate a map of any given dimension.
-   TODO: explain sampling better?
 
 This is comparable to the case where Markov chains are used for automatic essay
 writing TODO: reference to Murphy book. These automatically written essays use
@@ -129,7 +130,7 @@ sleep"[^This sentence is an example of a grammatically correct sentence with no
 meaning which we can assume does not occur in a standard English text. Taken
 from Chomsky 1956], since this sentence is not present in the training corpus,
 the Markov chain will not be able to infer what the next most probable word is
-and will simply have to stop generating text.
+and will have to stop generating text.
 
 A way of solving this problem is to use what is called backoff smoothing TODO:
 Murphy citation in which we consider less elements of the chain when faced with
@@ -141,31 +142,210 @@ sequences in the training data, thus improving the robustness of the model.
 
 While the definition of backoff smoothing is simple with linear chains, it
 becomes more complicated in the case of 2d chains. Our approach is detailed in
-the next section.
+[Section @sec:backoff].
 
 # Results
-- show a few examples of maps generated with the method pokemon red, pokemon
-  firered.
-- evaluate them qualitatively
-- show how number of tiles influence the results
-- evaluate how it can realistically used in games: time for generation
+In this section we will try to evaluate qualitatively a set of maps generated
+with our method. To this end we will use the data from the game *Pokemon Red
+(1996)* and *Pokemon FireRed (2004)*. The *FireRed* version is a remake of the
+*Red* version meaning that is mainly a visual upgrade of the first game; the
+locations and the spatial distribution of both games are very similar. This
+allows us to see first hand the effects of an increase in the number of unique
+tiles: *Pokemon Red* has 125 unique tiles while *Pokemon FireRed* has 1207
+different tiles.
+
+![A generated map based on *Pokemon Red*](../data/pokemon-red/generated/100n-3k/image/46.png){ width=50% #fig:red-result }
+
+![A generated map based on *Pokemon FireRed*](../data/pokemon-firered/generated/250n-3k/image/35.png){ width=50% #fig:firered-result }
+
+In @fig:red-result the overall results looks quite promising:
+
+- Except a patch of grass in the center, almost all the navigable space in the
+  map is reachable.
+- Aesthetically the map is plausible; it is comparable to what we can find in
+  the original *Pokemon Red* game with a similar distribution of tiles.
+- There are few incomplete structures in the map, mainly the buildings. This is
+  due to the fact that they are the structures with the largest number of
+  dependencies in the tiles that compose them.
+
+In @fig:firered-result the result is much worse though, there is a much larger
+number of incomplete structures and while the map looks believable locally, the
+transition between a forest environment and a city environment in the diagonal
+is problematic.
+
+This is due to the following facts:
+
+- The *FireRed* version has a higher number of tiles that do not make sense when
+  they are taken individually. The trees in *FireRed* for example are composed
+  of multiple tiles while in *Red* they take up only one tile.
+- *FireRed* uses many tiles that have similar meaning but different appearances.
+  The visual look of houses in *FireRed* are very varied while in *Red* they are
+  much more homogeneous.
+- The problem on the diagonal suggests that there is not enough data for
+  transitions between different environments. The diagonal shape is due to the
+  ways the backoff smoothing works: in this case it has not enough data to
+  generate the tiles and must rely only on the diagonal predecessors to generate
+  the next tile.
+
+These problems come from the fact that the dependencies between the map elements
+have a farther reach than what can appropriately be captured by the method. This
+lead us to believe that to work on games with large tilesets we would need a
+higher amount of data. Alternatively a few possible improvements to the method
+are discussed in [Section @sec:conclusion].
+
+The computational complexity of our method is linear in relation to the
+training-set size for training and linear in relation to the map size for
+generation^[This remains true as long as we assume to a take a relatively small
+number of predecessors into account. See [Section @sec:backoff] for more
+details]. This implies we can imagine using the method to generate maps
+dynamically while the game is running providing players with new levels each
+time. 
   
 # Technical details
 
 ## 2D Markov chains {#sec:markov-chains}
-- explain Markov chains very briefly
-- say that probabilities are computed with the frequencies
-- kernel explanation
-- show how different kernels affect the results
+Markov chains *TODO: Markov paper* are a mathematical formalism that allows us
+to model state transitions of a stochastic process. The particularity of Markov
+chains is that they only take the current state of the system into account to
+compute the next state. We can for example model the weather by two states:
+*sunny* and *rainy* that the probabilities of the weather being either sunny or
+rainy the next day only depend on the current weather. In our use case, the
+states correspond to one tile type and each map is generated sequentially by
+sampling the next state
+
+In our use case we represent a tile-map as a matrix where each entry corresponds
+to a specific tile. The Markov chain generating the map will have one state per
+tile type and will fill the matrix of the tile-map sequentially by sampling the
+next state at each entry.
+
+The chains are trained on the example data with a frequency computation.
+We used the approach that is detailed in @Snodgrass2013.
+
+This assumption that the next state only depends on the current state is called
+the *Markov property*. This property can be extended to hold on any number of
+previous states of the system, in which case we talk about higher order Markov
+chains. We can even assume that the predecessors are not only linear but that
+they are taken in multiple dimensions. *TODO: show images of Markov chains*.
+
+The number and position of previous tiles that are taken into account are
+explicitly defined by the predecessors matrix *TODO: add reference to
+predecessors matrix image*.
+
+![A map generated with a predecessor matrix of size 3](../data/pokemon-red/generated/250n-3k/image/36.png){ width=50% #fig:3k-map }
+
+![A map generated with a predecessor matrix of size 1](../data/pokemon-red/generated/250n-1k/image/7.png){ width=50% #fig:1k-map }
+
+As we can see in #fig:1k-map and #fig:1k-map the choice of the predecessor has a
+big influence on the outcome of the generation. In #fig:1k-map each tile takes
+only its immediate left neighbour into account, the chain is linear and we can
+easily see that there are no relations between each rows. In #fig:3k-map we use
+a predecessors matrix that is two-dimensional and we can immediately see that
+the generated map produced much more complex spatial structures as evidenced by
+the presence of elements composed by a combination of tiles such as houses and
+buildings.
+
+In general, larger predecessor matrices allow the expression of more complex
+structures, their use however is limited by the fact that they require more data
+to train. *TODO: MURPHY reference* Imagine we take a predecessor matrix of the
+size of the training maps, then the trained Markov chain would only be able to
+generate copies of its training data since it has learned anything else. We thus
+lose the potential for variability in the maps generated with larger predecessor
+matrices.
 
 ## Spatial style conservation {#sec:spatial-style}
-- show how different inputs give rise to different styles
-- input of pokemon red for example and link to the past
-- show space versions and full versions
+For our approach to be valid, the generated maps must reproduce the spatial
+style that is present in the training data-set. If this assumption is true then
+we expect that if we take two different games as training data that the
+generated maps will be different not only in the aesthetic sense but also in the
+spatial sense. As we said in [Section @sec:background] we can associate each
+tile with spatial meaning by defining if it is traversable by the player or not.
+We can then represent the tile-maps with only two tile types:
+
+- A tile representing empty space depicted as a black tile.
+- A tile representing an obstacle depicted as a white tile.
+
+To this end we generate two tile-maps with different games as training data; in
+@fig:mario-binary we use levels from *Mario* as training data and in
+@fig:red-binary we use use training data from *Pokemon*. We can immediately
+notice differences in the structure of the maps:
+
+- The empty space in the *Mario* map is almost all concentrated in the upper
+  part of the level. This is to give the player room to jump and traverse the
+  obstacles of the level. In the *Pokemon* map however the empty space is much
+  more dispersed; this can be explained by the fact that the player can
+  navigate in two-dimensions.
+- We can clearly see a ground-like structure in the bottom of the *Mario* level
+  and a few airborne platforms while the distribution of the obstacles in the
+  *Pokemon* map is much more varied.
+  
+The differences in these binary maps can be attributed to the way the players
+navigate space in their respective games. In *Mario* the player moves through
+the levels in a left to right direction avoiding enemies and obstacles by
+jumping; the levels have only one direction of progression. In contrast to the
+*Mario* game, in *Pokemon* the players can freely move with two degrees of
+freedom, the progression is non-linear and much less constrained. Given these
+differences in the generated maps we can assume the Markov chains do succeed in
+reproducing the spatial style of their training data.
+
+![A binary spatial-style map based on *Super Mario Bros.* levels](../data/super-mario-bros/generated/250n-3k-binary/image/105.png){ width=50% #fig:mario-binary }
+
+![A binary spatial-style map based on *Pokemon Red* maps](../data/pokemon-red/generated/250n-3k-binary/image/6.png){ width=50% #fig:red-binary }
 
 ## Backoff smoothing in 2d {#sec:backoff}
-- explain in detail how the smaller matrix is computed
-- show how it improves the results
+As explained before, backoff smoothing is useful when the Markov chain
+encounters unknown states in the generated data; it allows us take less
+predecessors into account when needed.
+
+With linear Markov chains the backoff smoothing is easy to define: for example
+if we take three previous states into account normally, we can take two instead.
+For 2d chains the problem is not so trivial since it is not clear which elements
+we have to take and how many of them.
+
+To facilitate our discussion we say that a predecessors matrix $S$ is a
+sub-matrix of predecessors matrix $P$ if it satisfies the following
+requirements:
+
+- $S$ must take less elements into account than $P$
+- $S$ must not take into account elements that are at a larger distance than $P$
+
+We can then simply implement backoff smoothing by taking a sub-matrix of our
+current predecessors matrix. This is done in a recursive manner by removing one
+element at the largest distance at a time. More formally, the list of
+sub-matrices of a predecessor matrix $P$ is given by:
+
+\begin{equation}
+subMatrices(P) \coloneqq\begin{cases}
+\bigcup_{k \in K} subMatrices(k), & \text{if $k \neq 0$}.\\
+0, & \text{otherwise}.
+\end{cases}
+\end{equation}
+
+where $K$ is the set of all matrices that are equal to $P$ minus one of the
+elements at the largest distance.
+
+\begin{figure}[h]
+\centering
+$
+\begin{pmatrix}
+ 0& 1& 2\\ 
+ 1& 1& 2\\ 
+ 2& 2& 2 
+\end{pmatrix}
+$
+\caption{A matrix showing the notions of distance, each number gives the distance of the corresponding cell}
+\end{figure}
+
+![A *Pokemon* map generated without backoff smoothing.](../data/pokemon-red/generated/250n-3k-without-backoff/image/12.png){ width=50% #fig:backoff }
+
+In #fig:backoff we can see the results of a map generated without backoff
+smoothing. The maps starts off well with the house on the upper left but then
+quickly degrades as soon it encounters a combination of tiles that are not
+present in the training data. By mitigating this effect backoff smoothing
+significantly improves the overall quality of the generated maps. A drawback of
+the backoff smoothing method is that it increases the computational time of both
+generation and training exponentially with the size of the predecessors matrix,
+this implies that in practice it limits the use of very large predecessors
+matrices.
 
 # Related work
 Game companies generally do not publish their procedural content generation
@@ -191,6 +371,11 @@ inspired by the work of @Snodgrass2013 and @Dahlskog2014. They both use Markov
 chains to create *Mario* levels with very convincing results. The difference
 with our approach lies in the fact that *Mario* levels have a linear nature. The
 maps we focus on are non-linear; the player can move through both dimensions.
+Additionally we use maps with a much higher number of tiles: *Pokemon red* has a
+total number of 125 unique tiles, *Pokemon FireRed* has 1207 unique tiles, in
+contrast the maps used by @Snodgrass2013 have only 11 unique tiles. Our sample
+is more representative of modern games in which the technological constraints
+limiting the number of unique tiles have almost disappeared.
 
 @Summerville2015 explore non-linear level generation in the context of dungeons
 for the game *The Legend of Zelda*. Their use of a graph to represent the game
@@ -199,21 +384,61 @@ define the high level structure of the world. Our focus is more on world maps
 rather than dungeons. Dungeons have a clear compartmentalization of individual
 rooms while world maps have a more organic unfolding of space. Furthermore,
 dungeons have elements such as locked doors that restrict the order in which the
-player can traverse the rooms. World typically do not have these types of
+player can traverse the rooms. World maps typically do not have these types of
 constraints.
 
-Finally, the video game level corpus provided by @Summerville2016 encouraged us
-to contribute to the corpus with our own extracted data and gave us a set of
-guidelines to follow when formatting the data.
+Finally, the video game level corpus provided by @Summerville2016 supplied us
+with the necessary data to generate *Super Mario Bros* maps.
 
-# Conclusion and further work
-- metrics to evaluate the maps quantitatively 
-- conditional random fields as in TODO: Snodgrass2016
-- limits of procedural generation with markov models
+# Conclusion and further research {#sec:conclusion}
+While not perfect, our method shows that Markov chains also have potential for
+the generation of non-linear maps particularly when the number of unique tiles
+is relatively small.
 
-Can we automate the holistic feel of a level? How does one recreate themes in
-design works successfully? Can machine learning capture the essence of
-something?
+There are many ways our method could improved:
+
+- We could create quantitative measures of map quality, generate a large number
+  of them and then select only the best. Since maps can be created relatively
+  fast this should be feasible, the only drawback being that is hard to define
+  measures of map quality that are independent of the game being used.
+- We could find ways of grouping semantically similar tiles into the same
+  high-level concepts and thus reduce the total number of unique tiles in the
+  tile-maps.
+- Instead of using 2d Markov chains, we could use Markov random fields *TODO:
+  reference MURPHY BOOK*. Their main difference with Markov chains lies in the
+  fact that they encode dependencies between their elements in a non-sequential
+  way. Since we want to create non-linear maps they might be better suited for
+  the task. The disadvantage of using Markov random fields comes from the fact
+  that they are harder to implement and they both require more time to train and
+  to sample appropriately.
+
+Our approach is not restricted to games and we can easily imagine using this
+method with 3D models composed of voxels. Tiles would be replaced by voxels and
+the Markov chains would be extended to work in 3d.
+
+In the end though, machine learning techniques for content generation have
+inherent limits that make the removal of human intervention not conceivable
+at the moment:
+
+- All the data used for training is created by humans, we cannot expect to use
+  these methods in areas where data is scarce or non-existent.
+- Machine learning techniques have a hard time capturing high-level themes,
+  their creations make sense at a local scale but fail to reproduce the holistic
+  feel of the training data. In the case of a game, levels are often
+  organized with the intention of teaching a player a new gameplay mechanic. For
+  example, the underlying theme of a *Mario* level could be teaching the player
+  how to handle flying enemies, all the level would be built around this motif.
+  A data-driven algorithm trained on all the available levels in *Mario* would
+  mix data from thematically different levels and thus fail to accurately
+  portray the intention of the designers. In theory this problem could be solved
+  by having a separate dataset for each possible theme in a game, in practice
+  though designers only create one example for each theme which is clearly not
+  sufficient. 
+  
+In conclusion, we do not see these methods as a replacement for the designer but
+rather as a tool, taking over in the most repetitive parts of the work. The
+designer is then free to focus on what really matters: transmitting his creative
+vision.
 
 # References
 
