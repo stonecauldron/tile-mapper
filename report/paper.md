@@ -1,5 +1,6 @@
 ---
 title: 'Generative spaces: assisting the level designer in creating world maps'
+author: 'Pedro Amorim'
 abstract: |
   Creating two-dimensional tile maps by hand is a long and tedious process. Tile
   maps contain an inherent structure and repetition that we should be able to
