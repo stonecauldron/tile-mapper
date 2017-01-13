@@ -9,7 +9,7 @@ abstract: |
 papersize: A4
 documentclass: article
 numbersections: true
-geometry: margin=3.5cm
+geometry: margin=3.7cm
 header-includes:
     - \usepackage{graphicx}
     - \usepackage{mathtools}
@@ -310,9 +310,9 @@ nearest left neighbour, $P_2$ only the nearest upper neighbour and $P_3$ takes
 all neighbours that are at a distance of 3 or less of the current tile.}
 \end{figure}
 
-![A map generated with predecessor matrix $P_3$](../data/pokemon-red/generated/250n-3k/image/36.png){ width=55% #fig:3k-map }
+![A map generated with predecessor matrix $P_3$](../data/pokemon-red/generated/250n-3k/image/36.png){ width=50% #fig:3k-map }
 
-![A map generated with predecessor matrix $P_1$](../data/pokemon-red/generated/250n-1k/image/7.png){ width=55% #fig:1k-map }
+![A map generated with predecessor matrix $P_1$](../data/pokemon-red/generated/250n-1k/image/7.png){ width=50% #fig:1k-map }
 
 As we can see in @fig:3k-map and @fig:1k-map the choice of the predecessor has a
 big influence on the outcome of the generation. In @fig:1k-map each tile takes
