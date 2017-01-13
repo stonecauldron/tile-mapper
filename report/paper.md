@@ -12,6 +12,7 @@ numbersections: true
 header-includes:
     - \usepackage{graphicx}
     - \usepackage{mathtools}
+    - \usepackage{tikz}
 #classoption: twocolumn
 ---
 
@@ -28,14 +29,13 @@ universe of over 18 quintillion planets $1.8 \cdot 10^{19}$, suffice to say that
 you would need many lifetimes to explore them all.
 
 Most approaches to procedural generation are rule based, meaning that they rely
-on the definition of explicit rules. L-systems are an example of such a rule
-based system. they allow the creation of tree-like structures. TODO: Reference
-to an image of an L-system. The limitations of rule based systems lies on the
-fact that they cannot learn from already existing examples and reproduce them.
-We would not be able to show an L-system images of oaks for example and expect
-it to reproduce trees in the same style. We would need to define exactly the
-rules that represent "oakness", the attributes that make an oak an oak. TODO:
-citation L-systems
+on the definition of explicit rules. L-systems (@Lindenmayer1968) are an example
+of such a rule based system, they allow the creation of tree-like structures.
+The limitations of rule based systems lies on the fact that they cannot learn
+from already existing examples and reproduce them. We would not be able to show
+an L-system images of oaks for example and expect it to reproduce trees in the
+same style. We would need to define exactly the rules that represent "oakness",
+the attributes that make an oak an oak.
 
 Data-driven techniques for procedural generation are still relatively rare; in
 this paper we try to see whether it is possible to reproduce the spatial style
@@ -67,15 +67,6 @@ predefined size and assembled into a grid.
 ![An example of a tile-map with the grid structure visible.\
 *Pokemon FireRed (2004)*](img/tile-map-example.png){ width=75% }
 
-*TODO: add one figure with multiples tiles inside it*
-
-<div id="fig:figureRef">
-![subfigure 1 caption](img/tile-grass.png){#fig:figureRefA width=50%}
-![subfigure 2 caption](img/tile-flower.png){#fig:figureRefB width=50%}
-
-Caption of figure
-</div>
-
 Game developers make use of tile-maps for various reasons:
 
 - They reduce the number of art assets that need to be created for the game
@@ -100,9 +91,9 @@ procedurally would lift a burden off the shoulders of the level designers and
 allow the generation of much larger worlds.
 
 The use of tile-maps might seem like an outdated method but they are still used
-in many independent games, some of which have been quite successful.
-
-TODO: example of games with tile-maps
+in many independent games, some of which have been quite successful^[*Stardew
+Valley (2016)* or *Undertale (2015)* are both million seller games that make use
+of tile-maps.].
 
 # The idea {#sec:idea}
 Let us remind you of our objective; we want to be able to generate tile-maps
@@ -116,7 +107,7 @@ from a set of representative examples. Our process has the following steps:
 4. We then sample this Markov chain to generate a map of any given dimension.
 
 This is comparable to the case where Markov chains are used for automatic essay
-writing TODO: reference to Murphy book. These automatically written essays use
+writing (@Murphy2012). These automatically written essays use
 similar idioms and vocabulary to the ones present in the learning dataset; in a
 certain sense they emulate the style of a given text. For the same reasons we
 expect our Markov chains to reproduce the spatial style of its learning
@@ -132,8 +123,8 @@ from Chomsky 1956], since this sentence is not present in the training corpus,
 the Markov chain will not be able to infer what the next most probable word is
 and will have to stop generating text.
 
-A way of solving this problem is to use what is called backoff smoothing TODO:
-Murphy citation in which we consider less elements of the chain when faced with
+A way of solving this problem is to use what is called backoff smoothing
+(@Murphy2012) in which we consider less elements of the chain when faced with
 unknown data. To take our above example again, instead of considering the whole
 chain to infer the next most likely word we can restrict ourselves to the
 previous word only, which in this case is "sleep". By reducing the number of
@@ -204,7 +195,7 @@ time.
 # Technical details
 
 ## 2D Markov chains {#sec:markov-chains}
-Markov chains *TODO: Markov paper* are a mathematical formalism that allows us
+Markov chains (@Chomsky1956) are a mathematical formalism that allows us
 to model state transitions of a stochastic process. The particularity of Markov
 chains is that they only take the current state of the system into account to
 compute the next state. We can for example model the weather by two states:
@@ -225,20 +216,107 @@ This assumption that the next state only depends on the current state is called
 the *Markov property*. This property can be extended to hold on any number of
 previous states of the system, in which case we talk about higher order Markov
 chains. We can even assume that the predecessors are not only linear but that
-they are taken in multiple dimensions. *TODO: show images of Markov chains*.
+they are taken in multiple dimensions.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (7.7,-6.6) circle (3);
+\draw (7.7,-6.6) node {$S_{1,1}$};
+\draw [black] (18.3,-6.6) circle (3);
+\draw (18.3,-6.6) node {$S_{1,2}$};
+\draw [black] (28.8,-6.6) circle (3);
+\draw (28.8,-6.6) node {$S_{1,3}$};
+\draw [black] (7.7,-15.8) circle (3);
+\draw (7.7,-15.8) node {$S_{2,1}$};
+\draw [black] (18.3,-15.8) circle (3);
+\draw (18.3,-15.8) node {$S_{2,2}$};
+\draw [black] (28.8,-15.8) circle (3);
+\draw (28.8,-15.8) node {$S_{2,3}$};
+\draw [black] (39,-6.6) circle (3);
+\draw (39,-6.6) node {$...$};
+\draw [black] (39,-15.8) circle (3);
+\draw (39,-15.8) node {$...$};
+\draw [black] (7.7,-24.8) circle (3);
+\draw (7.7,-24.8) node {$...$};
+\draw [black] (18.3,-24.8) circle (3);
+\draw (18.3,-24.8) node {$...$};
+\draw [black] (28.8,-24.8) circle (3);
+\draw (28.8,-24.8) node {$...$};
+\draw [black] (7.7,-9.6) -- (7.7,-12.8);
+\fill [black] (7.7,-12.8) -- (8.2,-12) -- (7.2,-12);
+\draw [black] (10.7,-6.6) -- (15.3,-6.6);
+\fill [black] (15.3,-6.6) -- (14.5,-6.1) -- (14.5,-7.1);
+\draw [black] (21.3,-6.6) -- (25.8,-6.6);
+\fill [black] (25.8,-6.6) -- (25,-6.1) -- (25,-7.1);
+\draw [black] (10.7,-15.8) -- (15.3,-15.8);
+\fill [black] (15.3,-15.8) -- (14.5,-15.3) -- (14.5,-16.3);
+\draw [black] (21.3,-15.8) -- (25.8,-15.8);
+\fill [black] (25.8,-15.8) -- (25,-15.3) -- (25,-16.3);
+\draw [black] (18.3,-9.6) -- (18.3,-12.8);
+\fill [black] (18.3,-12.8) -- (18.8,-12) -- (17.8,-12);
+\draw [black] (28.8,-9.6) -- (28.8,-12.8);
+\fill [black] (28.8,-12.8) -- (29.3,-12) -- (28.3,-12);
+\draw [black] (7.7,-18.8) -- (7.7,-21.8);
+\fill [black] (7.7,-21.8) -- (8.2,-21) -- (7.2,-21);
+\draw [black] (18.3,-18.8) -- (18.3,-21.8);
+\fill [black] (18.3,-21.8) -- (18.8,-21) -- (17.8,-21);
+\draw [black] (28.8,-18.8) -- (28.8,-21.8);
+\fill [black] (28.8,-21.8) -- (29.3,-21) -- (28.3,-21);
+\draw [black] (10.7,-24.8) -- (15.3,-24.8);
+\fill [black] (15.3,-24.8) -- (14.5,-24.3) -- (14.5,-25.3);
+\draw [black] (21.3,-24.8) -- (25.8,-24.8);
+\fill [black] (25.8,-24.8) -- (25,-24.3) -- (25,-25.3);
+\draw [black] (31.8,-6.6) -- (36,-6.6);
+\fill [black] (36,-6.6) -- (35.2,-6.1) -- (35.2,-7.1);
+\draw [black] (31.8,-15.8) -- (36,-15.8);
+\fill [black] (36,-15.8) -- (35.2,-15.3) -- (35.2,-16.3);
+\draw [black] (39,-9.6) -- (39,-12.8);
+\fill [black] (39,-12.8) -- (39.5,-12) -- (38.5,-12);
+\end{tikzpicture}
+\caption{A figure showing the dependencies in a 2d Markov chain}
+\end{figure}
 
 The number and position of previous tiles that are taken into account are
-explicitly defined by the predecessors matrix *TODO: add reference to
-predecessors matrix image*.
+explicitly defined by the predecessors matrix.
+
+\begin{figure}[h]
+\centering
+$
+\begin{pmatrix}
+ 0& 1& 0\\ 
+ 0& 0& 0\\ 
+ 0& 0& 0 
+\end{pmatrix}
+$
+$
+\begin{pmatrix}
+ 0& 0& 0\\ 
+ 1& 0& 0\\ 
+ 0& 0& 0 
+\end{pmatrix}
+$
+$
+\begin{pmatrix}
+ 0& 1& 0\\ 
+ 1& 1& 0\\ 
+ 0& 0& 0 
+\end{pmatrix}
+$
+\caption{Various predecessors matrices: the first only takes into account the
+nearest left neighbour, the second only the nearest upper neighbour and the
+third takes both into account.}
+\end{figure}
 
 ![A map generated with a predecessor matrix of size 3](../data/pokemon-red/generated/250n-3k/image/36.png){ width=50% #fig:3k-map }
 
 ![A map generated with a predecessor matrix of size 1](../data/pokemon-red/generated/250n-1k/image/7.png){ width=50% #fig:1k-map }
 
-As we can see in #fig:1k-map and #fig:1k-map the choice of the predecessor has a
-big influence on the outcome of the generation. In #fig:1k-map each tile takes
+As we can see in @fig:3k-map and @fig:1k-map the choice of the predecessor has a
+big influence on the outcome of the generation. In @fig:1k-map each tile takes
 only its immediate left neighbour into account, the chain is linear and we can
-easily see that there are no relations between each rows. In #fig:3k-map we use
+easily see that there are no relations between each rows. In @fig:3k-map we use
 a predecessors matrix that is two-dimensional and we can immediately see that
 the generated map produced much more complex spatial structures as evidenced by
 the presence of elements composed by a combination of tiles such as houses and
@@ -246,7 +324,7 @@ buildings.
 
 In general, larger predecessor matrices allow the expression of more complex
 structures, their use however is limited by the fact that they require more data
-to train. *TODO: MURPHY reference* Imagine we take a predecessor matrix of the
+to train. Imagine we take a predecessor matrix of the
 size of the training maps, then the trained Markov chain would only be able to
 generate copies of its training data since it has learned anything else. We thus
 lose the potential for variability in the maps generated with larger predecessor
@@ -404,13 +482,13 @@ There are many ways our method could improved:
 - We could find ways of grouping semantically similar tiles into the same
   high-level concepts and thus reduce the total number of unique tiles in the
   tile-maps.
-- Instead of using 2d Markov chains, we could use Markov random fields *TODO:
-  reference MURPHY BOOK*. Their main difference with Markov chains lies in the
-  fact that they encode dependencies between their elements in a non-sequential
-  way. Since we want to create non-linear maps they might be better suited for
-  the task. The disadvantage of using Markov random fields comes from the fact
-  that they are harder to implement and they both require more time to train and
-  to sample appropriately.
+- Instead of using 2d Markov chains, we could use Markov random fields
+  @Murphy2012. Their main difference with Markov chains lies in the fact that
+  they encode dependencies between their elements in a non-sequential way. Since
+  we want to create non-linear maps they might be better suited for the task.
+  The disadvantage of using Markov random fields comes from the fact that they
+  are harder to implement and they both require more time to train and to sample
+  appropriately.
 
 Our approach is not restricted to games and we can easily imagine using this
 method with 3D models composed of voxels. Tiles would be replaced by voxels and
@@ -444,6 +522,78 @@ vision.
 
 ---
 references:
+- id: Chomsky1956
+  type: article-journal
+  author:
+  - family: Chomsky
+    given: Noam
+  issued:
+  - year: '1956'
+  title: '[Three models for the description of language]{.nocase}'
+  container-title: IRE Transactions on Information Theory
+  page: '113-124'
+  volume: '2'
+  issue: '3'
+  abstract: We investigate several conceptions of linguistic structure to determine
+    whether or not they can provide simple and “revealing” grammars that generate
+    all of the sentences of English and only these. We find that no finite-state Markov
+    process that produces symbols with transition from state to state can serve as
+    an English grammar. Furthermore, the particular subclass of such processes that
+    produce&lt;tex&gt;n&lt;/tex&gt;-order statistical approximations to English do
+    not come closer, with increasing&lt;tex&gt;n&lt;/tex&gt;, to matching the output
+    of an English grammar. We formalize-the notions of “phrase structure” and show
+    that this gives us a method for describing language which is essentially more
+    powerful, though still representable as a rather elementary type of finite-state
+    process. Nevertheless, it is successful only when limited to a small subset of
+    simple sentences. We study the formal properties of a set of grammatical transformations
+    that carry sentences with phrase structure into new sentences with derived phrase
+    structure, showing that transformational grammars are processes of the same elementary
+    type as phrase-structure grammars; that the grammar of English is materially simplified
+    if phrase structure description is limited to a kernel of simple sentences from
+    which all other sentences are constructed by repeated transformations; and that
+    this view of linguistic structure gives a certain insight into the use and understanding
+    of language.
+  DOI: 10.1109/TIT.1956.1056813
+  ISBN: '0096-1000'
+  ISSN: '0096-1000'
+
+- id: Cross1983
+  type: article-journal
+  author:
+  - family: Cross
+    given: George R.
+  - family: Jain
+    given: Anil K.
+  issued:
+  - year: '1983'
+  title: Markov Random Field Texture Models
+  container-title: IEEE Transactions on Pattern Analysis and Machine Intelligence
+  page: '25-39'
+  volume: PAMI-5
+  issue: '1'
+  abstract: We consider a texture to be a stochastic, possibly periodic, two-dimensional
+    image field. A texture model is a mathematical procedure capable of producing
+    and describing a textured image. We explore the use of Markov random fields as
+    texture models. The binomial model, where each point in the texture has a binomial
+    distribution with parameter controlled by its neighbors and “number of tries”
+    equal to the number of gray levels, was taken to be the basic model for the analysis.
+    A method of generating samples from the binomial model is given, followed by a
+    theoretical and practical analysis of the method’s convergence. Examples show
+    how the parameters of the Markov random field control the strength and direction
+    of the clustering in the image. The power of the binomial model to produce blurry,
+    sharp, line-like, and blob-like textures is demonstrated. Natural texture samples
+    were digitized and their parameters were estimated under the Markov random field
+    model. A hypothesis test was used for an objective assessment of goodness-of-fit
+    under the Markov random field model. Overall, microtextures fit the model well.
+    The estimated parameters of the natural textures were used as input to the generation
+    procedure. The synthetic microtextures closely resembled their real counterparts,
+    while the regular and inhomogeneous textures did not.
+  keyword: Binomial model,Markov random field,goodness-of-fit,hypothesis test,image
+    modeling,texture
+  DOI: 10.1109/TPAMI.1983.4767341
+  ISSN: '01628828'
+  PMID: '21869080'
+
 - id: Dahlskog2014
   type: article-journal
   author:
@@ -455,7 +605,7 @@ references:
     given: Mark J.
   issued:
   - year: '2014'
-  title: <span class="nocase">Linear levels through n-grams</span>
+  title: '[Linear levels through n-grams]{.nocase}'
   container-title: Proceedings of the 18th International Academic MindTrek Conference
     on Media Business, Management, Content & Services - AcademicMindTrek ’14
   page: '200-206'
@@ -483,8 +633,8 @@ references:
     given: Joris
   issued:
   - year: '2010'
-  title: '<span class="nocase">Adventures in level design: generating missions and
-    spaces for action adventure games</span>'
+  title: '[Adventures in level design: generating missions and spaces for action
+    adventure games]{.nocase}'
   container-title: … Workshop on Procedural Content Generation in Games
   page: '1-8'
   abstract: This paper investigates strategies to generate levels for action adventure
@@ -495,7 +645,7 @@ references:
     in two individual steps. It discusses the merits of different types of generative
     grammars for each individual step in the process.
   keyword: action adventure games,level design,procedural generation
-  URL: http://portal.acm.org/citation.cfm?id=1814257$\backslash$nhttp://dl.acm.org/citation.cfm?id=1814257
+  URL: http://portal.acm.org/citation.cfm?id=1814257{\%}5Cnhttp://dl.acm.org/citation.cfm?id=1814257
   DOI: 10.1145/1814256.1814257
   ISBN: '9781450300230'
 
@@ -508,7 +658,7 @@ references:
     given: Mark O
   issued:
   - year: '2015'
-  title: <span class="nocase">Toward Game Level Generation from Gameplay Videos</span>
+  title: '[Toward Game Level Generation from Gameplay Videos]{.nocase}'
   container-title: Proceedings of the Sixth Workshop on Procedural Content Generation
     in Games (PCG 2015)
   issue: '1'
@@ -536,9 +686,75 @@ references:
     given: Julian
   issued:
   - year: '2015'
-  title: <span class="nocase">Composing Video Game Levels with Music Metaphors through
-    Functional Scaffolding</span>
+  title: '[Composing Video Game Levels with Music Metaphors through Functional Scaffolding]{.nocase}'
   container-title: Proceedings of 1st Computational Creativity & Games Workshop
+
+- id: Li2016
+  type: article-journal
+  author:
+  - family: Li
+    given: Chuan
+  - family: Wand
+    given: Michael
+  issued:
+  - year: '2016'
+  title: '[Combining Markov Random Fields and Convolutional Neural Networks for
+    Image Synthesis]{.nocase}'
+  container-title: Cvpr 2016
+  page: '9'
+  abstract: This paper studies a combination of generative Markov random field (MRF)
+    models and discriminatively trained deep convolutional neural networks (dCNNs)
+    for synthesizing 2D images. The generative MRF acts on higher-levels of a dCNN
+    feature pyramid, controling the image layout at an abstract level. We apply the
+    method to both photographic and non-photo-realistic (artwork) synthesis tasks.
+    The MRF regularizer prevents over-excitation artifacts and reduces implausible
+    feature mixtures common to previous dCNN inversion approaches, permitting synthezing
+    photographic content with increased visual plausibility. Unlike standard MRF-based
+    texture synthesis, the combined system can both match and adapt local features
+    with considerable variability, yielding results far out of reach of classic generative
+    MRF methods.
+  URL: https://github.com/chuanli11/CNNMRF
+  DOI: 10.1109/CVPR.2016.272
+  ISBN: '9781467388511'
+  ISSN: '10636919'
+
+- id: Lindenmayer1968
+  type: article-journal
+  author:
+  - family: Lindenmayer
+    given: a
+  issued:
+  - year: '1968'
+  title: '[Mathematical models for cellular interactions in development. II. Simple
+    and branching filaments with two-sided inputs.]{.nocase}'
+  container-title: Journal of theoretical biology
+  page: '300-315'
+  volume: '18'
+  issue: '3'
+  abstract: Continuing the presentation of a theory of growth models for filamentous
+    organisms, the treatment is extended to cases where inputs are received by each
+    cell from both directions along the filament, and the change of state and the
+    output of a cell is determined by its present state and the two inputs it receives.
+    Further symbolism is introduced to take care of branching filaments as well. Two
+    entirely different models are constructed for a particular branching organism,
+    resembling one of the red algae. These models are compared with reference to the
+    number of states employed, and the presence or absence of instructions for unequal
+    divisions and for inductive relationships among the cells. The importance of a
+    morphogenetic control theory concerning these relationships is emphasized.
+  DOI: 10.1016/0022-5193(68)90080-5
+  ISBN: '978-1-60558-516-1'
+  ISSN: '00225193'
+  PMID: '5659072'
+
+- id: Murphy2012
+  type: book
+  author:
+  - family: Murphy
+    given: Kevin P
+  issued:
+  - year: '2012'
+  title: '[Machine learning: a probabilistic perspective]{.nocase}'
+  publisher: MIT press
 
 - id: Shaker2014
   type: article-journal
@@ -549,8 +765,8 @@ references:
     given: Mohamed
   issued:
   - year: '2014'
-  title: '<span class="nocase">Alone We Can Do So Little, Together We Can Do So
-    Much: A Combinatorial Approach for Generating Game Content</span>'
+  title: '[Alone We Can Do So Little, Together We Can Do So Much: A Combinatorial
+    Approach for Generating Game Content]{.nocase}'
   container-title: Aiide
   page: '167-173'
   abstract: In this paper we present a procedural content generator using Non-negative
@@ -583,8 +799,7 @@ references:
     given: Michael
   issued:
   - year: '2012'
-  title: <span class="nocase">Evolving levels for Super Mario Bros using grammatical
-    evolution</span>
+  title: '[Evolving levels for Super Mario Bros using grammatical evolution]{.nocase}'
   container-title: 2012 IEEE Conference on Computational Intelligence and Games, CIG
     2012
   page: '304-311'
@@ -625,8 +840,8 @@ references:
     given: Philippe
   issued:
   - year: '2010'
-  title: <span class="nocase">Towards a Generic Framework for Automated Video Game
-    Level Creation Applications of Evolutionary Computation</span>
+  title: '[Towards a Generic Framework for Automated Video Game Level Creation Applications
+    of Evolutionary Computation]{.nocase}'
   page: 131-140 ST - Towards a Generic Framework for Auto
   volume: '6024'
   keyword: genetic algorithms,level design,procedural content,video games
@@ -645,8 +860,8 @@ references:
     given: Steve
   issued:
   - year: '2011'
-  title: <span class="nocase">A generic approach to challenge modeling for the procedural
-    creation of video game levels</span>
+  title: '[A generic approach to challenge modeling for the procedural creation
+    of video game levels]{.nocase}'
   container-title: IEEE Transactions on Computational Intelligence and AI in Games
   page: '229-244'
   volume: '3'
@@ -678,8 +893,7 @@ references:
     given: Michael
   issued:
   - year: '2015'
-  title: '<span class="nocase">The Learning of Zelda : Data-Driven Learning of Level
-    Topology</span>'
+  title: '[The Learning of Zelda : Data-Driven Learning of Level Topology]{.nocase}'
   issue: Fdg
   keyword: data-driven level design,games,level de-,machine learning,probabilistic
     learning,procedural content generation,sign
@@ -720,12 +934,11 @@ references:
     given: Michael
   issued:
   - year: '2015'
-  title: '<span class="nocase">Sampling Hyrule: Sampling Probabilistic Machine Learning
-    for Level Generation</span>'
+  title: '[Sampling Hyrule: Sampling Probabilistic Machine Learning for Level Generation]{.nocase}'
   page: '1-5'
   abstract: 'Experimental AI in Games: Papers from the AIIDE 2015 Workshop'
   keyword: EXAG
-  URL: http://www.exag.org/accepted-papers/$\backslash$npapers3://publication/uuid/6C73920E-C485-4CC6-9FDD-F455CEDC15B1
+  URL: http://www.exag.org/accepted-papers/{\%}5Cnpapers3://publication/uuid/6C73920E-C485-4CC6-9FDD-F455CEDC15B1
 
 - id: Togelius2010
   type: article-journal
@@ -738,7 +951,7 @@ references:
     given: Gn
   issued:
   - year: '2010'
-  title: <span class="nocase">Towards multiobjective procedural map generation</span>
+  title: '[Towards multiobjective procedural map generation]{.nocase}'
   container-title: Proceedings of the 2010 Workshop on Procedural Content Generation
     in Games PCGames 10
   page: '1-8'
@@ -753,7 +966,7 @@ references:
     on the Pareto fronts, maps can be found that exhibit good map design according
     to specified criteria, and could either be used directly in e.g. an RTS game or
     form the basis for further human design.
-  URL: http://portal.acm.org/citation.cfm?doid=1814256.1814259$\backslash$nhttp://dl.acm.org/citation.cfm?id=1814259
+  URL: http://portal.acm.org/citation.cfm?doid=1814256.1814259{\%}5Cnhttp://dl.acm.org/citation.cfm?id=1814259
   DOI: 10.1145/1814256.1814259
   ISBN: '9781450300230'
 ...
