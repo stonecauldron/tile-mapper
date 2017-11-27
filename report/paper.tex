@@ -66,7 +66,10 @@
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{tikz}
-\usepackage{subfig}
+\makeatletter
+\@ifpackageloaded{subfig}{}{\usepackage{subfig}}
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\captionsetup[subfloat]{margin=0.5em}
 \AtBeginDocument{%
 \renewcommand*\figurename{Figure}
 \renewcommand*\tablename{Table}
@@ -75,13 +78,12 @@
 \renewcommand*\listfigurename{List of Figures}
 \renewcommand*\listtablename{List of Tables}
 }
-\usepackage{float}
+\@ifpackageloaded{float}{}{\usepackage{float}}
 \floatstyle{ruled}
-\makeatletter
 \@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
-\makeatother
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
 
 \title{Generative spaces: assisting the level designer in creating world maps}
 \author{Pedro Caldeira}
@@ -744,19 +746,19 @@ Dahlskog, Steve, Julian Togelius, and Mark J. Nelson. 2014. ``Linear
 levels through n-grams.'' \emph{Proceedings of the 18th International
 Academic MindTrek Conference on Media Business, Management, Content \&
 Services - AcademicMindTrek '14}, 200--206.
-doi:\href{https://doi.org/10.1145/2676467.2676506}{10.1145/2676467.2676506}.
+\url{https://doi.org/10.1145/2676467.2676506}.
 
 \hypertarget{ref-Dormans2010}{}
 Dormans, Joris. 2010. ``Adventures in level design: generating missions
 and spaces for action adventure games.'' \emph{\ldots{} Workshop on
 Procedural Content Generation in Games}, 1--8.
-doi:\href{https://doi.org/10.1145/1814256.1814257}{10.1145/1814256.1814257}.
+\url{https://doi.org/10.1145/1814256.1814257}.
 
 \hypertarget{ref-Lindenmayer1968}{}
 Lindenmayer, a. 1968. ``Mathematical models for cellular interactions in
 development. II. Simple and branching filaments with two-sided inputs.''
-\emph{Journal of Theoretical Biology} 18 (3): 300--315.
-doi:\href{https://doi.org/10.1016/0022-5193(68)90080-5}{10.1016/0022-5193(68)90080-5}.
+\emph{Journal of Theoretical Biology} 18 (3):300--315.
+\url{https://doi.org/10.1016/0022-5193(68)90080-5}.
 
 \hypertarget{ref-Murphy2012}{}
 Murphy, Kevin P. 2012. \emph{Machine learning: a probabilistic
@@ -766,8 +768,8 @@ perspective}. MIT press.
 Shaker, Noor, Miguel Nicolau, Georgios N. Yannakakis, Julian Togelius,
 and Michael O'Neill. 2012. ``Evolving levels for Super Mario Bros using
 grammatical evolution.'' \emph{2012 IEEE Conference on Computational
-Intelligence and Games, CIG 2012}, no. 1: 304--11.
-doi:\href{https://doi.org/10.1109/CIG.2012.6374170}{10.1109/CIG.2012.6374170}.
+Intelligence and Games, CIG 2012}, no. 1:304--11.
+\url{https://doi.org/10.1109/CIG.2012.6374170}.
 
 \hypertarget{ref-Snodgrass2013}{}
 Snodgrass, Sam, and Santiago Ontañón. 2013. ``Generating Maps Using
@@ -777,9 +779,8 @@ Markov Chains.'' \emph{Aiide}, 25--28.
 \hypertarget{ref-Sorenson2010}{}
 Sorenson, Nathan, and Philippe Pasquier. 2010. ``Towards a Generic
 Framework for Automated Video Game Level Creation Applications of
-Evolutionary Computation'' 6024: 131--40 ST--Towards a Generic Framework
-for Auto.
-doi:\href{https://doi.org/10.1007/978-3-642-12239-2_14}{10.1007/978-3-642-12239-2\_14}.
+Evolutionary Computation'' 6024:131--40 ST--Towards a Generic Framework
+for Auto. \url{https://doi.org/10.1007/978-3-642-12239-2_14}.
 
 \hypertarget{ref-Summerville2015}{}
 Summerville, Adam J, and Michael Mateas. 2015. ``The Learning of Zelda :
