@@ -25,6 +25,7 @@ PANDOC_DOCX_OPTIONS=
 PANDOC_RTF_OPTIONS=
 PANDOC_ODT_OPTIONS=
 PANDOC_EPUB_OPTIONS=--to epub3
+PANDOC_TEX_OPTIONS=
 
 
 # Pattern-matching Rules
@@ -46,6 +47,9 @@ PANDOC_EPUB_OPTIONS=--to epub3
 
 %.epub : %.md
 	$(PANDOC) $(PANDOC_OPTIONS) $(PANDOC_EPUB_OPTIONS) -o $@ $<
+
+%.tex : %.md
+	$(PANDOC) $(PANDOC_OPTIONS) $(PANDOC_TEX_OPTIONS) -o $@ $<
 
 
 # Targets and dependencies
